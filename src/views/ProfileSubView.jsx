@@ -58,24 +58,32 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
             {/* Visi */}
             <div className="space-y-3 bg-emerald-50/20 border border-emerald-100/50 p-6 rounded-2xl">
               <h3 className="font-display font-extrabold text-emerald-850 text-sm uppercase tracking-wider">Visi Desa</h3>
-              <p className="font-display font-bold text-stone-800 text-base md:text-lg leading-relaxed">
-                "{data.visiMisi.visi}"
-              </p>
+              {data.visiMisi.visi ? (
+                <p className="font-display font-bold text-stone-800 text-base md:text-lg leading-relaxed">
+                  "{data.visiMisi.visi}"
+                </p>
+              ) : (
+                <p className="text-stone-400 text-xs italic">Konten visi desa belum diisi.</p>
+              )}
             </div>
 
             {/* Misi */}
             <div className="space-y-4">
               <h3 className="font-display font-extrabold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-100 pb-2">Misi Desa</h3>
-              <ol className="space-y-3.5">
-                {data.visiMisi.misi.map((misiStr, idx) => (
-                  <li key={idx} className="flex items-start space-x-3 text-sm sm:text-base text-stone-600">
-                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold shrink-0 mt-0.5">
-                      {idx + 1}
-                    </span>
-                    <span className="leading-relaxed">{misiStr}</span>
-                  </li>
-                ))}
-              </ol>
+              {data.visiMisi.misi && data.visiMisi.misi.length > 0 ? (
+                <ol className="space-y-3.5">
+                  {data.visiMisi.misi.map((misiStr, idx) => (
+                    <li key={idx} className="flex items-start space-x-3 text-sm sm:text-base text-stone-600">
+                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold shrink-0 mt-0.5">
+                        {idx + 1}
+                      </span>
+                      <span className="leading-relaxed">{misiStr}</span>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="text-stone-400 text-xs italic">Konten misi desa belum diisi.</p>
+              )}
             </div>
           </div>
         );
@@ -90,65 +98,25 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
               <h2 className="font-display font-bold text-stone-900 text-xl sm:text-2xl">{data.struktur.title}</h2>
             </div>
 
-            {/* Simulated Organization Tree layout */}
-            <div className="space-y-6 max-w-2xl mx-auto py-4">
-              
-              {/* Kades (Top) */}
-              <div className="flex flex-col items-center">
-                <div className="bg-emerald-600 border border-emerald-500 text-white rounded-2xl py-3.5 px-6 text-center shadow-xs min-w-[220px]">
-                  <p className="text-[10px] uppercase font-bold text-emerald-150 tracking-wider">Kepala Desa</p>
-                  <p className="font-display font-extrabold text-sm sm:text-base mt-0.5">
-                    {data.struktur.officials.find(o => o.role === 'Kepala Desa')?.name}
+            {/* Clean Vertical list going down (no lines, no tree) */}
+            <div className="flex flex-col items-center space-y-4 max-w-md mx-auto py-6">
+              {data.struktur.officials.map((official, idx) => (
+                <div 
+                  key={idx} 
+                  className="w-full bg-stone-50 border border-stone-150 rounded-2xl p-4 text-center shadow-2xs hover:shadow-xs transition-shadow"
+                >
+                  <p className="text-[10px] uppercase font-extrabold text-emerald-800 tracking-wider">
+                    {official.role}
+                  </p>
+                  <p className="font-display font-extrabold text-stone-900 text-base mt-1">
+                    {official.name}
                   </p>
                 </div>
-                {/* Vertical Line */}
-                <div className="w-0.5 h-6 bg-stone-300"></div>
-              </div>
+              ))}
+            </div>
 
-              {/* Sekdes (Middle) */}
-              <div className="flex flex-col items-center">
-                <div className="bg-stone-850 text-white rounded-2xl py-3 px-5 text-center shadow-xs min-w-[200px]">
-                  <p className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Sekretaris Desa</p>
-                  <p className="font-display font-extrabold text-sm mt-0.5">
-                    {data.struktur.officials.find(o => o.role === 'Sekretaris Desa')?.name}
-                  </p>
-                </div>
-                {/* Vertical Line split */}
-                <div className="w-0.5 h-6 bg-stone-300"></div>
-                <div className="w-full max-w-md border-t-2 border-stone-300"></div>
-                <div className="w-full max-w-md flex justify-between h-6">
-                  <div className="w-0.5 h-full bg-stone-300"></div>
-                  <div className="w-0.5 h-full bg-stone-300"></div>
-                  <div className="w-0.5 h-full bg-stone-300"></div>
-                </div>
-              </div>
-
-              {/* Staff / Kaurs (Bottom Row) */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                <div className="bg-stone-50 border border-stone-200 rounded-xl p-3">
-                  <p className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Kaur Keuangan</p>
-                  <p className="font-bold text-xs text-stone-850 mt-0.5">
-                    {data.struktur.officials.find(o => o.role === 'Kaur Keuangan')?.name}
-                  </p>
-                </div>
-                <div className="bg-stone-50 border border-stone-200 rounded-xl p-3">
-                  <p className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Kaur Umum & TU</p>
-                  <p className="font-bold text-xs text-stone-850 mt-0.5">
-                    {data.struktur.officials.find(o => o.role === 'Kaur Umum & Tata Usaha')?.name}
-                  </p>
-                </div>
-                <div className="bg-stone-50 border border-stone-200 rounded-xl p-3">
-                  <p className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Kasi Pemerintahan</p>
-                  <p className="font-bold text-xs text-stone-850 mt-0.5">
-                    {data.struktur.officials.find(o => o.role === 'Kasi Pemerintahan')?.name}
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center pt-6">
-                <p className="text-xs text-stone-500">Struktur Pemerintahan Periode Jabatan Aktif Desa Pasirmunjul.</p>
-              </div>
-
+            <div className="text-center pt-2">
+              <p className="text-xs text-stone-500">{data.struktur.description || 'Struktur Pemerintahan Periode Jabatan Aktif Desa Pasirmunjul.'}</p>
             </div>
           </div>
         );
@@ -255,65 +223,99 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
                   <h3 className="font-display font-bold text-stone-900 text-lg md:text-xl">Akses Cepat Informasi QR Code</h3>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Dusun 1 Link */}
-                    <button 
-                      onClick={() => setView('dusun-1')}
-                      className="group p-5 rounded-2xl border border-stone-200 hover:border-emerald-500/50 hover:bg-emerald-50/10 text-left transition-all duration-300 shadow-xs hover:shadow-sm cursor-pointer"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="bg-emerald-100 p-2.5 rounded-xl text-emerald-700">
-                          <ShoppingBag className="h-5 w-5" />
-                        </div>
-                        <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Dusun 1</span>
-                      </div>
-                      <h4 className="font-display font-bold text-stone-900 text-base mt-4 group-hover:text-emerald-700 transition-colors">Sentra UMKM Gula Aren</h4>
-                      <p className="text-xs text-stone-500 mt-1">Edukasi pembuatan gula nira alami & kontak pemasaran warga.</p>
-                    </button>
+                    {(() => {
+                      const defaultQuickLinks = [
+                        {
+                          linkKey: 'dusun-1',
+                          label: 'Dusun 1',
+                          title: 'Sentra UMKM Gula Aren',
+                          description: 'Edukasi pembuatan gula nira alami & kontak pemasaran warga.'
+                        },
+                        {
+                          linkKey: 'dusun-2',
+                          label: 'Dusun 2',
+                          title: 'Kawasan Pemukiman',
+                          description: 'Profil perumahan warga, tata kelola sanitasi, & program KKN.'
+                        },
+                        {
+                          linkKey: 'dusun-3',
+                          label: 'Dusun 3',
+                          title: 'Alam & Perkebunan',
+                          description: 'Wisata sungai alam, perkebunan pisang subur, & info tani.'
+                        },
+                        {
+                          linkKey: 'blog',
+                          label: 'Berita',
+                          title: 'Kabar Desa (Blog)',
+                          description: 'Update kabar KKN, pengumuman desa, dan kegiatan sosial.'
+                        }
+                      ];
 
-                    {/* Dusun 2 Link */}
-                    <button 
-                      onClick={() => setView('dusun-2')}
-                      className="group p-5 rounded-2xl border border-stone-200 hover:border-emerald-500/50 hover:bg-emerald-50/10 text-left transition-all duration-300 shadow-xs hover:shadow-sm cursor-pointer"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="bg-stone-100 p-2.5 rounded-xl text-stone-500">
-                          <Home className="h-5 w-5" />
-                        </div>
-                        <span className="text-[10px] font-bold text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full uppercase tracking-wider">Dusun 2</span>
-                      </div>
-                      <h4 className="font-display font-bold text-stone-900 text-base mt-4 group-hover:text-emerald-700 transition-colors">Kawasan Pemukiman</h4>
-                      <p className="text-xs text-stone-500 mt-1">Profil perumahan warga, tata kelola sanitasi, & program KKN.</p>
-                    </button>
+                      const quickLinks = villageInfo.quickLinks && villageInfo.quickLinks.length === 4 
+                        ? villageInfo.quickLinks 
+                        : defaultQuickLinks;
 
-                    {/* Dusun 3 Link */}
-                    <button 
-                      onClick={() => setView('dusun-3')}
-                      className="group p-5 rounded-2xl border border-stone-200 hover:border-emerald-500/50 hover:bg-emerald-50/10 text-left transition-all duration-300 shadow-xs hover:shadow-sm cursor-pointer"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="bg-emerald-100 p-2.5 rounded-xl text-emerald-700">
-                          <Map className="h-5 w-5" />
-                        </div>
-                        <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Dusun 3</span>
-                      </div>
-                      <h4 className="font-display font-bold text-stone-900 text-base mt-4 group-hover:text-emerald-700 transition-colors">Alam & Perkebunan</h4>
-                      <p className="text-xs text-stone-500 mt-1">Wisata sungai alam, perkebunan pisang subur, & info tani.</p>
-                    </button>
+                      const getCardStyle = (linkKey) => {
+                        switch (linkKey) {
+                          case 'dusun-1':
+                            return {
+                              borderClass: 'border-stone-200 hover:border-emerald-500/50 hover:bg-emerald-50/10',
+                              iconBg: 'bg-emerald-100 text-emerald-700',
+                              labelBg: 'text-emerald-600 bg-emerald-100/50',
+                              IconComponent: ShoppingBag
+                            };
+                          case 'dusun-2':
+                            return {
+                              borderClass: 'border-stone-200 hover:border-emerald-500/50 hover:bg-emerald-50/10',
+                              iconBg: 'bg-stone-100 text-stone-500',
+                              labelBg: 'text-stone-400 bg-stone-100',
+                              IconComponent: Home
+                            };
+                          case 'dusun-3':
+                            return {
+                              borderClass: 'border-stone-200 hover:border-emerald-500/50 hover:bg-emerald-50/10',
+                              iconBg: 'bg-emerald-100 text-emerald-700',
+                              labelBg: 'text-emerald-600 bg-emerald-100/50',
+                              IconComponent: Map
+                            };
+                          case 'blog':
+                          default:
+                            return {
+                              borderClass: 'border-amber-200 bg-amber-50/10 hover:border-amber-500 hover:bg-amber-50/30',
+                              iconBg: 'bg-amber-100 text-amber-800',
+                              labelBg: 'text-amber-800 bg-amber-200',
+                              IconComponent: BookOpen
+                            };
+                        }
+                      };
 
-                    {/* Blog Link */}
-                    <button 
-                      onClick={() => setView('blog')}
-                      className="group p-5 rounded-2xl border border-amber-200 bg-amber-50/10 hover:border-amber-500 hover:bg-amber-50/30 text-left transition-all duration-300 shadow-xs hover:shadow-sm cursor-pointer"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="bg-amber-100 p-2.5 rounded-xl text-amber-800">
-                          <BookOpen className="h-5 w-5" />
-                        </div>
-                        <span className="text-[10px] font-bold text-amber-800 bg-amber-200 px-2 py-0.5 rounded-full uppercase tracking-wider">Berita</span>
-                      </div>
-                      <h4 className="font-display font-bold text-stone-900 text-base mt-4 group-hover:text-amber-700 transition-colors">Kabar Desa (Blog)</h4>
-                      <p className="text-xs text-stone-500 mt-1">Update kabar KKN, pengumuman desa, dan kegiatan sosial.</p>
-                    </button>
+                      return quickLinks.map((link) => {
+                        const style = getCardStyle(link.linkKey);
+                        const Icon = style.IconComponent;
+                        return (
+                          <button 
+                            key={link.linkKey}
+                            onClick={() => setView(link.linkKey)}
+                            className={`group p-5 rounded-2xl border text-left transition-all duration-300 shadow-xs hover:shadow-sm cursor-pointer ${style.borderClass}`}
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className={`p-2.5 rounded-xl ${style.iconBg}`}>
+                                <Icon className="h-5 w-5" />
+                              </div>
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${style.labelBg}`}>
+                                {link.label || 'LINK'}
+                              </span>
+                            </div>
+                            <h4 className="font-display font-bold text-stone-900 text-base mt-4 group-hover:text-emerald-700 transition-colors">
+                              {link.title}
+                            </h4>
+                            <p className="text-xs text-stone-500 mt-1">
+                              {link.description}
+                            </p>
+                          </button>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               </div>

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { ArrowLeft, Calendar, User, Clock, Search, MessageSquare, Grid } from 'lucide-react';
 
 export default function BlogListView({ posts, setView, setSelectedPostId }) {
-  // Filtering & Search states
+  // Filtering, Search & Pagination states
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const categories = ['Semua', 'KKN Update', 'UMKM', 'Agrowisata'];
+  const itemsPerPage = 12;
 
   // Popular tags for Pasirmunjul
   const popularTags = [
@@ -23,14 +25,29 @@ export default function BlogListView({ posts, setView, setSelectedPostId }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Filter posts
+  // Filter posts with safe defaults to prevent crashing on missing properties
   const filteredPosts = posts.filter(post => {
-    const matchesCategory = selectedCategory === 'Semua' || post.category === selectedCategory;
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          post.content.toLowerCase().includes(searchTerm.toLowerCase());
+    const postCategory = post.category || 'Berita';
+    const matchesCategory = selectedCategory === 'Semua' || postCategory === selectedCategory;
+    
+    const titleText = (post.title || '').toLowerCase();
+    const excerptText = (post.excerpt || '').toLowerCase();
+    const contentText = (post.content || '').toLowerCase();
+    const searchVal = searchTerm.toLowerCase();
+    
+    const matchesSearch = titleText.includes(searchVal) || 
+                          excerptText.includes(searchVal) ||
+                          contentText.includes(searchVal);
+                          
     return matchesCategory && matchesSearch;
   });
+
+  // Calculate pagination variables
+  const totalItems = filteredPosts.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
 
   // Get the absolute latest post title for breaking news ticker
   const latestPostTitle = posts[0] ? posts[0].title : 'Belum ada kabar berita terbaru.';
@@ -54,6 +71,7 @@ export default function BlogListView({ posts, setView, setSelectedPostId }) {
               onClick={() => {
                 const keyword = tag.replace('# ', '');
                 setSearchTerm(keyword);
+                setCurrentPage(1); // Reset page on filter
               }}
               className="text-[11px] font-extrabold text-stone-850 hover:text-emerald-700 transition-colors whitespace-nowrap cursor-pointer"
             >
@@ -109,7 +127,10 @@ export default function BlogListView({ posts, setView, setSelectedPostId }) {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setSelectedCategory(cat)}
+              onClick={() => {
+                setSelectedCategory(cat);
+                setCurrentPage(1); // Reset page on filter
+              }}
               className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
                 selectedCategory === cat
                   ? 'bg-emerald-600 text-white'
@@ -125,7 +146,10 @@ export default function BlogListView({ posts, setView, setSelectedPostId }) {
           <input
             type="text"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1); // Reset page on search
+            }}
             placeholder="Cari kabar berita..."
             className="w-full pl-10 pr-4 py-2 rounded-full border border-stone-300 text-xs bg-stone-50/50 text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
           />
@@ -134,66 +158,112 @@ export default function BlogListView({ posts, setView, setSelectedPostId }) {
       </section>
 
       {/* Newspaper style grid layout (Matching Hanura screenshot but in Pasirmunjul green palette) */}
-      {filteredPosts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPosts.map((post) => (
-            <article 
-              key={post.id}
-              className="flex flex-col bg-white text-stone-800 space-y-4 animate-fade-in group"
-            >
-              {/* Image with bottom-left category label badge */}
-              <div className="aspect-video sm:aspect-[4/3] bg-stone-100 relative overflow-hidden rounded-xs border border-stone-150 shadow-xs">
-                <img 
-                  src={post.image} 
-                  alt={post.title} 
-                  className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                  loading="lazy"
-                />
-                <span className="absolute bottom-4 left-4 bg-emerald-800/90 text-white font-extrabold text-[9px] px-3 py-1.5 uppercase tracking-wider">
-                  {post.category}
-                </span>
-              </div>
+      {paginatedPosts.length > 0 ? (
+        <div className="space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {paginatedPosts.map((post) => (
+              <article 
+                key={post.id}
+                className="flex flex-col bg-white text-stone-800 space-y-4 animate-fade-in group"
+              >
+                {/* Image with bottom-left category label badge */}
+                <div className="aspect-video sm:aspect-[4/3] bg-stone-55 relative overflow-hidden rounded-xs border border-stone-150 shadow-xs">
+                  <img 
+                    src={post.image || 'https://via.placeholder.com/600x400'} 
+                    alt={post.title} 
+                    className="w-full h-full object-contain group-hover:scale-102 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <span className="absolute bottom-4 left-4 bg-emerald-800/90 text-white font-extrabold text-[9px] px-3 py-1.5 uppercase tracking-wider">
+                    {post.category || 'Berita'}
+                  </span>
+                </div>
 
-              {/* Title & Metadata */}
-              <div className="space-y-3 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="font-display font-extrabold text-stone-900 text-base sm:text-lg leading-snug group-hover:text-emerald-750 transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
+                {/* Title & Metadata */}
+                <div className="space-y-3 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-display font-extrabold text-stone-900 text-base sm:text-lg leading-snug group-hover:text-emerald-750 transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
 
-                  {/* Metadata Row */}
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-stone-400 font-medium pt-1 pb-2">
-                    <div className="flex items-center space-x-1">
-                      <User className="h-3.5 w-3.5 text-stone-400" />
-                      <span>{post.author}</span>
+                    {/* Metadata Row */}
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-stone-400 font-medium pt-1 pb-2">
+                      <div className="flex items-center space-x-1">
+                        <User className="h-3.5 w-3.5 text-stone-400" />
+                        <span>{post.author || 'Tim KKN Pasirmunjul 2026'}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Clock className="h-3.5 w-3.5 text-stone-400" />
+                        <span>{post.date || '8 Juli 2026'}</span>
+                      </div>
+                      <div className="flex items-center space-x-1.5">
+                        <MessageSquare className="h-3.5 w-3.5 text-stone-400" />
+                        <span>0</span>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="h-3.5 w-3.5 text-stone-400" />
-                      <span>{post.date}</span>
-                    </div>
-                    <div className="flex items-center space-x-1.5">
-                      <MessageSquare className="h-3.5 w-3.5 text-stone-400" />
-                      <span>0</span>
-                    </div>
+
+                    <p className="text-stone-600 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                      {post.excerpt || 'Klik Read More untuk membaca detail liputan kabar desa selengkapnya.'}
+                    </p>
                   </div>
 
-                  <p className="text-stone-600 text-xs sm:text-sm leading-relaxed line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                  {/* Read More button */}
+                  <div className="pt-2">
+                    <button
+                      onClick={() => handleReadMore(post.id)}
+                      className="px-4 py-2 border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50/10 text-stone-850 hover:text-emerald-750 text-xs font-bold transition-all uppercase tracking-wider cursor-pointer"
+                    >
+                      Read More
+                    </button>
+                  </div>
                 </div>
+              </article>
+            ))}
+          </div>
 
-                {/* Read More button */}
-                <div className="pt-2">
-                  <button
-                    onClick={() => handleReadMore(post.id)}
-                    className="px-4 py-2 border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50/10 text-stone-850 hover:text-emerald-750 text-xs font-bold transition-all uppercase tracking-wider cursor-pointer"
-                  >
-                    Read More
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center space-x-2 pt-8 border-t border-stone-200">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => {
+                  setCurrentPage(prev => Math.max(prev - 1, 1));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="px-3.5 py-2 border border-stone-300 bg-white hover:bg-stone-50 text-stone-750 text-xs font-bold uppercase tracking-wider rounded-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                Prev
+              </button>
+              
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  key={pageNum}
+                  onClick={() => {
+                    setCurrentPage(pageNum);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className={`w-9 h-9 border text-xs font-extrabold uppercase rounded-xs transition-colors cursor-pointer flex items-center justify-center ${
+                    currentPage === pageNum
+                      ? 'bg-emerald-700 border-emerald-700 text-white shadow-xs'
+                      : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-50'
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              ))}
+              
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => {
+                  setCurrentPage(prev => Math.min(prev + 1, totalPages));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="px-3.5 py-2 border border-stone-300 bg-white hover:bg-stone-50 text-stone-755 text-xs font-bold uppercase tracking-wider rounded-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="text-center py-16 bg-white rounded-3xl border border-stone-200 p-8">

@@ -69,13 +69,13 @@ export default function PhotoGallery({ photos }) {
       {/* Lightbox Modal */}
       {activeIdx !== null && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in"
           onClick={closeLightbox}
         >
           {/* Close button */}
           <button 
             onClick={closeLightbox}
-            className="absolute top-4 right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+            className="absolute top-4 right-4 z-[10000] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
             aria-label="Tutup"
           >
             <X className="h-6 w-6" />
@@ -84,7 +84,7 @@ export default function PhotoGallery({ photos }) {
           {/* Left Arrow */}
           <button 
             onClick={showPrev}
-            className="absolute left-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-40"
+            className="absolute left-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-[10000]"
             aria-label="Sebelumnya"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -92,7 +92,7 @@ export default function PhotoGallery({ photos }) {
 
           {/* Main Content Area */}
           <div 
-            className="max-w-4xl w-full flex flex-col items-center justify-center"
+            className="max-w-4xl w-full flex flex-col items-center justify-center z-[10000]"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
           >
             <div className="relative max-h-[75vh] w-full flex justify-center bg-black/40 rounded-lg overflow-hidden">
@@ -116,7 +116,7 @@ export default function PhotoGallery({ photos }) {
           {/* Right Arrow */}
           <button 
             onClick={showNext}
-            className="absolute right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-40"
+            className="absolute right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-[10000]"
             aria-label="Selanjutnya"
           >
             <ChevronRight className="h-6 w-6" />

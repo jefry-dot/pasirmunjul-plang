@@ -19,7 +19,7 @@ export default function BlogDetailView({ postId, posts, setView }) {
   }
 
   // Format the post content text with line breaks
-  const paragraphs = post.content.split('\n\n');
+  const paragraphs = (post.content || 'Detail artikel berita belum diisi. Silakan isi konten artikel ini di dashboard Sanity CMS Anda.').split('\n\n');
 
   return (
     <div className="max-w-3xl mx-auto pb-16 animate-fade-in space-y-8">
@@ -35,7 +35,7 @@ export default function BlogDetailView({ postId, posts, setView }) {
         
         <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-800 text-xs font-semibold uppercase tracking-wider">
           <Bookmark className="h-3 w-3" />
-          <span>{post.category}</span>
+          <span>{post.category || 'Berita'}</span>
         </span>
       </div>
 
@@ -48,24 +48,24 @@ export default function BlogDetailView({ postId, posts, setView }) {
       <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-stone-500 font-medium pb-4 border-b border-stone-200">
         <div className="flex items-center space-x-1">
           <User className="h-4 w-4 text-stone-400" />
-          <span>Ditulis oleh: {post.author}</span>
+          <span>Ditulis oleh: {post.author || 'Tim KKN Pasirmunjul 2026'}</span>
         </div>
         <div className="flex items-center space-x-1">
           <Calendar className="h-4 w-4 text-stone-400" />
-          <span>{post.date}</span>
+          <span>{post.date || '8 Juli 2026'}</span>
         </div>
         <div className="flex items-center space-x-1">
           <Clock className="h-4 w-4 text-stone-400" />
-          <span>{post.readTime}</span>
+          <span>{post.readTime || '3 Menit Baca'}</span>
         </div>
       </div>
 
       {/* Featured Image */}
-      <div className="aspect-video sm:aspect-21/9 rounded-3xl overflow-hidden bg-stone-100 border border-stone-200/50 shadow-sm">
+      <div className="aspect-video sm:aspect-21/9 rounded-3xl overflow-hidden bg-stone-50 border border-stone-200/50 shadow-sm">
         <img 
-          src={post.image} 
+          src={post.image || 'https://via.placeholder.com/600x400'} 
           alt={post.title} 
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
       </div>
 

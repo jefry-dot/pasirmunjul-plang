@@ -145,7 +145,7 @@ export const DUSUN_DATA = {
     gallery: [
       {
         id: "d1-img1",
-        src: "https://images.unsplash.com/photo-1616781296180-264d852a420f?q=80&w=600&auto=format&fit=crop",
+        src: "/images/dusun_1_aren.jpg",
         title: "Pohon Aren Alami",
         description: "Pohon aren yang tumbuh subur di wilayah hutan Dusun 1."
       },
@@ -169,7 +169,14 @@ export const DUSUN_DATA = {
     lead: "Kepala Dusun 2 - Bpk. Cecep Hidayat",
     profile: "Dusun 2 merupakan wilayah pemukiman asri yang memadukan kawasan pertanian pangan warga dan wilayah konservasi air. Saat ini, Dusun 2 sedang dipersiapkan untuk menjadi sentra pengembangan pertanian organik terpadu dan kerajinan anyaman bambu khas Purwakarta.",
     message: "Konten informasi program kerja KKN, UMKM, atau wisata Dusun 2 sedang dalam proses penyusunan dan kurasi bersama perangkat desa. Halaman ini akan segera terisi data lengkap.",
-    gallery: []
+    gallery: [
+      {
+        id: "d2-img1",
+        src: "/images/dusun_2_village.jpg",
+        title: "Kawasan Pemukiman Bersih",
+        description: "Lingkungan perumahan warga yang bersih dan asri di Dusun 2."
+      }
+    ]
   },
   "dusun-3": {
     id: "dusun-3",
@@ -190,9 +197,9 @@ export const DUSUN_DATA = {
     gallery: [
       {
         id: "d3-img1",
-        src: "https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=600&auto=format&fit=crop",
-        title: "Sungai Irigasi Pasirmunjul",
-        description: "Sungai alami dengan bebatuan indah yang mengairi sawah-sawah warga."
+        src: "/images/dusun_3_nature.jpg",
+        title: "Pertanian & Sungai",
+        description: "Keindahan alam dan aliran air pegunungan yang subur di Dusun 3."
       },
       {
         id: "d3-img2",
