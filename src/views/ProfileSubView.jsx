@@ -28,8 +28,9 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
   const renderContent = () => {
     switch (type) {
       case 'sejarah':
+        const sejarahCover = data.sejarah.coverImageUrl;
         return (
-          <div className="bg-white rounded-3xl border border-stone-200/80 p-6 sm:p-8 shadow-xs space-y-6">
+          <div className="bg-white rounded-3xl border border-stone-200/80 p-6 sm:p-8 shadow-xs space-y-6 animate-fade-in">
             <div className="flex items-center space-x-3 pb-4 border-b border-stone-100">
               <div className="bg-emerald-100 p-2.5 rounded-xl text-emerald-700">
                 <BookOpen className="h-6 w-6" />
@@ -37,10 +38,31 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
               <h2 className="font-display font-bold text-stone-900 text-xl sm:text-2xl">{data.sejarah.title}</h2>
             </div>
             
-            <div className="prose prose-emerald max-w-none text-stone-600 leading-relaxed text-sm sm:text-base space-y-4">
-              {data.sejarah.content.split('\n\n').map((para, idx) => (
-                <p key={idx}>{para}</p>
-              ))}
+            {/* Top Cover Image / Logo if uploaded in Sanity */}
+            {sejarahCover && (
+              <div className="w-full max-h-[350px] overflow-hidden rounded-2xl border border-stone-200/60 bg-stone-50 shadow-xs flex justify-center items-center">
+                <img 
+                  src={sejarahCover} 
+                  alt="Cover Sejarah Desa" 
+                  className="w-full h-full object-cover max-h-[350px]"
+                />
+              </div>
+            )}
+
+            <div className="prose prose-emerald max-w-none text-stone-600 leading-relaxed text-sm sm:text-base space-y-4 pt-2">
+              {data.sejarah.content && data.sejarah.content.split('\n\n').map((para, idx) => {
+                const parts = para.split(/\*\*([^*]+)\*\*/g);
+                return (
+                  <p key={idx}>
+                    {parts.map((part, partIdx) => {
+                      if (partIdx % 2 === 1) {
+                        return <strong key={partIdx} className="font-extrabold text-stone-900">{part}</strong>;
+                      }
+                      return part;
+                    })}
+                  </p>
+                );
+              })}
             </div>
           </div>
         );
@@ -130,7 +152,6 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
               </div>
               <h2 className="font-display font-bold text-stone-900 text-xl sm:text-2xl">{data.monografi.title}</h2>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* General Data Table */}
               <div className="space-y-4">
@@ -138,7 +159,7 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
                 <div className="border border-stone-150 rounded-2xl overflow-hidden shadow-xs">
                   <table className="w-full text-xs sm:text-sm text-left text-stone-600">
                     <tbody className="divide-y divide-stone-100">
-                      {data.monografi.general.map((item, idx) => (
+                      {data.monografi.general && data.monografi.general.map((item, idx) => (
                         <tr key={idx} className="bg-white hover:bg-stone-50/50">
                           <td className="px-4 py-3 font-semibold text-stone-500 bg-stone-50/30 w-1/3">{item.name}</td>
                           <td className="px-4 py-3 text-stone-800 font-medium">{item.value}</td>
@@ -156,7 +177,7 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
                   <div className="border border-stone-150 rounded-2xl overflow-hidden shadow-xs">
                     <table className="w-full text-xs sm:text-sm text-left text-stone-600">
                       <tbody className="divide-y divide-stone-100">
-                        {data.monografi.population.map((item, idx) => (
+                        {data.monografi.population && data.monografi.population.map((item, idx) => (
                           <tr key={idx} className="bg-white hover:bg-stone-50/50">
                             <td className="px-4 py-3 font-semibold text-stone-500 bg-stone-50/30 w-1/2">{item.category}</td>
                             <td className="px-4 py-3 text-stone-800 font-bold">{item.value}</td>
@@ -173,7 +194,7 @@ export default function ProfileSubView({ type, data, googleMapsUrl, villageInfo,
                   <div className="border border-stone-150 rounded-2xl overflow-hidden shadow-xs">
                     <table className="w-full text-xs sm:text-sm text-left text-stone-600">
                       <tbody className="divide-y divide-stone-100">
-                        {data.monografi.livelihoods.map((item, idx) => (
+                        {data.monografi.livelihoods && data.monografi.livelihoods.map((item, idx) => (
                           <tr key={idx} className="bg-white hover:bg-stone-50/50">
                             <td className="px-4 py-3 font-semibold text-stone-500 bg-stone-50/30 w-1/2">{item.job}</td>
                             <td className="px-4 py-3 text-stone-800 font-medium">{item.count}</td>

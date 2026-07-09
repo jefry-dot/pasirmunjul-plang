@@ -131,9 +131,9 @@ export default function DusunDetailView({ dusunId, setView }) {
   return (
     <div className="pb-24 animate-fade-in font-sans text-stone-850 w-full">
       
-      {/* 1. HERO HEADER BANNER (Full-width stretching completely to edges of the window) */}
+      {/* 1. HERO HEADER BANNER (Full-screen viewport height) */}
       <section 
-        className="relative min-h-[350px] sm:min-h-[500px] flex items-center justify-center text-center p-8 sm:p-16 bg-stone-900 overflow-hidden w-full"
+        className="relative h-screen flex items-center justify-center text-center p-8 sm:p-16 bg-stone-900 overflow-hidden w-full"
         style={heroBgImage ? {
           backgroundImage: `linear-gradient(rgba(4, 47, 31, 0.72), rgba(4, 47, 31, 0.72)), url(${heroBgImage})`,
           backgroundSize: 'cover',
@@ -175,9 +175,9 @@ export default function DusunDetailView({ dusunId, setView }) {
         </div>
       </section>
 
-      {/* 2. PROFILE SECTION (Constrained inside margin) */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <section ref={contentRef} className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-12 items-center bg-white p-6 sm:p-10 border border-stone-200 scroll-mt-6">
+      {/* 2. PROFILE SECTION (Constrained inside margin, starts directly below the full-screen banner) */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
+        <section ref={contentRef} className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-12 items-center bg-white p-6 sm:p-10 border border-stone-200 scroll-mt-12 shadow-sm rounded-sm">
           {/* Left Column: Portrait Profile Image */}
           <div className="md:col-span-5 aspect-[3/4] sm:aspect-square md:aspect-[3/4] bg-stone-50 border border-stone-200 overflow-hidden">
             <img 

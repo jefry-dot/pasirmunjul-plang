@@ -26,7 +26,17 @@ export default defineConfig({
                   .documentId('profilSingkat')
                   .title('Edit Profil Singkat & Statistik')
               ),
-            // 2. Singleton: Visi & Misi
+            // 2. Singleton: Sejarah Desa
+            S.listItem()
+              .title('Sejarah Desa')
+              .id('sejarah')
+              .child(
+                S.document()
+                  .schemaType('sejarah')
+                  .documentId('sejarah')
+                  .title('Edit Sejarah Desa')
+              ),
+            // 3. Singleton: Visi & Misi
             S.listItem()
               .title('Visi & Misi')
               .id('visiMisi')
@@ -36,7 +46,7 @@ export default defineConfig({
                   .documentId('visiMisi')
                   .title('Edit Visi & Misi')
               ),
-            // 3. Singleton: Struktur Organisasi
+            // 4. Singleton: Struktur Organisasi
             S.listItem()
               .title('Struktur Organisasi')
               .id('struktur')
@@ -46,10 +56,20 @@ export default defineConfig({
                   .documentId('struktur')
                   .title('Edit Struktur Organisasi')
               ),
+            // 5. Singleton: Monografi Desa
+            S.listItem()
+              .title('Monografi Desa')
+              .id('monografi')
+              .child(
+                S.document()
+                  .schemaType('monografi')
+                  .documentId('monografi')
+                  .title('Edit Monografi Desa')
+              ),
             
             S.divider(), // Visual divider for Hamlets
 
-            // 4. Singleton: Dusun 1
+            // 6. Singleton: Dusun 1
             S.listItem()
               .title('Dusun 1 (Sentra UMKM)')
               .id('dusun-1')
@@ -59,7 +79,7 @@ export default defineConfig({
                   .documentId('dusun-1')
                   .title('Edit Data Dusun 1')
               ),
-            // 5. Singleton: Dusun 2
+            // 7. Singleton: Dusun 2
             S.listItem()
               .title('Dusun 2 (Pemukiman & Konservasi)')
               .id('dusun-2')
@@ -69,7 +89,7 @@ export default defineConfig({
                   .documentId('dusun-2')
                   .title('Edit Data Dusun 2')
               ),
-            // 6. Singleton: Dusun 3
+            // 8. Singleton: Dusun 3
             S.listItem()
               .title('Dusun 3 (Kekayaan Alam & Tani)')
               .id('dusun-3')
@@ -82,7 +102,7 @@ export default defineConfig({
 
             S.divider(), // Visual divider for other content
 
-            // 7. Singleton: Informasi Umum Desa
+            // 9. Singleton: Informasi Umum Desa
             S.listItem()
               .title('Informasi Umum Desa')
               .id('villageInfo')
@@ -92,12 +112,12 @@ export default defineConfig({
                   .documentId('villageInfo')
                   .title('Edit Informasi Umum Desa')
               ),
-            // 8. Kabar Desa (Blog) - Regular Document (Multi-document List)
+            // 10. Kabar Desa (Blog) - Regular Document (Multi-document List)
             S.documentTypeListItem('post').title('Kabar Desa (Blog)'),
             
             // Filter out singleton types from default list to avoid duplication in menu
             ...S.documentTypeListItems().filter(
-              (listItem) => !['villageInfo', 'profilSingkat', 'visiMisi', 'struktur', 'dusun', 'post'].includes(listItem.getId())
+              (listItem) => !['villageInfo', 'profilSingkat', 'visiMisi', 'sejarah', 'monografi', 'struktur', 'dusun', 'post'].includes(listItem.getId())
             ),
           ])
     }),
@@ -111,14 +131,14 @@ export default defineConfig({
   document: {
     // Restrict actions for singletons: only allow edit/publish (no delete, duplicate, or unpublish)
     actions: (prev, context) => {
-      const singletonTypes = new Set(['villageInfo', 'profilSingkat', 'visiMisi', 'struktur', 'dusun'])
+      const singletonTypes = new Set(['villageInfo', 'profilSingkat', 'visiMisi', 'sejarah', 'monografi', 'struktur', 'dusun'])
       return singletonTypes.has(context.schemaType)
         ? prev.filter(({ action }) => action && ['publish', 'discardChanges', 'restore'].includes(action))
         : prev
     },
     // Prevent creating new templates or duplicated documents for singletons
     newDocumentOptions: (prev, context) => {
-      const singletonTypes = new Set(['villageInfo', 'profilSingkat', 'visiMisi', 'struktur', 'dusun'])
+      const singletonTypes = new Set(['villageInfo', 'profilSingkat', 'visiMisi', 'sejarah', 'monografi', 'struktur', 'dusun'])
       return prev.filter((templateItem) => !singletonTypes.has(templateItem.templateId))
     }
   }

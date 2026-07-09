@@ -33,6 +33,12 @@ export default function App() {
     misi: []
   });
 
+  // Dynamic state for Monografi page content (singleton)
+  const [monografi, setMonografi] = useState(PROFILE_DESA_SUB.monografi);
+
+  // Dynamic state for Sejarah Desa page content (singleton)
+  const [sejarah, setSejarah] = useState(PROFILE_DESA_SUB.sejarah);
+
   // Dynamic state for government officials structure (singleton)
   const [struktur, setStruktur] = useState({
     title: PROFILE_DESA_SUB.struktur.title,
@@ -143,6 +149,82 @@ export default function App() {
     })
     .catch((err) => {
       console.error("Gagal mengambil data visiMisi dari Sanity, menggunakan data lokal:", err);
+    });
+  }, []);
+
+  // Fetch monografi page data from Sanity CMS on mount
+  useEffect(() => {
+    client.fetch(`*[_type == "monografi"][0] {
+      title,
+      provinsi,
+      kabupaten,
+      kecamatan,
+      luasWilayah,
+      batasUtara,
+      batasSelatan,
+      batasTimur,
+      batasBarat,
+      totalPenduduk,
+      lakiLaki,
+      perempuan,
+      jumlahKK,
+      petani,
+      umkm,
+      karyawan,
+      pns
+    }`)
+    .then((data) => {
+      if (data) {
+        setMonografi({
+          title: data.title || 'Monografi Desa Pasirmunjul',
+          general: [
+            { name: 'Provinsi', value: data.provinsi || 'Jawa Barat' },
+            { name: 'Kabupaten', value: data.kabupaten || 'Purwakarta' },
+            { name: 'Kecamatan', value: data.kecamatan || 'Sukatani' },
+            { name: 'Luas Wilayah', value: data.luasWilayah || '348,5 Hektar (Ha)' },
+            { name: 'Batas Wilayah Utara', value: data.batasUtara || 'Desa Sukatani' },
+            { name: 'Batas Wilayah Selatan', value: data.batasSelatan || 'Desa Cilalawi' },
+            { name: 'Batas Wilayah Timur', value: data.batasTimur || 'Desa Tajursindang' },
+            { name: 'Batas Wilayah Barat', value: data.batasBarat || 'Desa Panyindangan' }
+          ],
+          population: [
+            { category: 'Jumlah Total Penduduk', value: data.totalPenduduk || '3.420 Jiwa' },
+            { category: 'Jumlah Laki-laki', value: data.lakiLaki || '1.745 Jiwa' },
+            { category: 'Jumlah Perempuan', value: data.perempuan || '1.675 Jiwa' },
+            { category: 'Jumlah Kepala Keluarga (KK)', value: data.jumlahKK || '985 KK' }
+          ],
+          livelihoods: [
+            { job: 'Petani & Buruh Tani', count: data.petani || '1.240 Orang' },
+            { job: 'Pelaku UMKM / Wiraswasta', count: data.umkm || '185 Orang' },
+            { job: 'Karyawan Swasta', count: data.karyawan || '320 Orang' },
+            { job: 'PNS / TNI / POLRI', count: data.pns || '45 Orang' }
+          ]
+        });
+      }
+    })
+    .catch((err) => {
+      console.error("Gagal mengambil data monografi dari Sanity, menggunakan data lokal:", err);
+    });
+  }, []);
+
+  // Fetch sejarah page data from Sanity CMS on mount
+  useEffect(() => {
+    client.fetch(`*[_type == "sejarah"][0] {
+      title,
+      "coverImageUrl": coverImage.asset->url,
+      content
+    }`)
+    .then((data) => {
+      if (data) {
+        setSejarah({
+          title: data.title || 'Sejarah Desa Pasirmunjul',
+          coverImageUrl: data.coverImageUrl || null,
+          content: data.content || PROFILE_DESA_SUB.sejarah.content
+        });
+      }
+    })
+    .catch((err) => {
+      console.error("Gagal mengambil data sejarah dari Sanity, menggunakan data lokal:", err);
     });
   }, []);
 
@@ -263,6 +345,8 @@ export default function App() {
             data={{
               ...PROFILE_DESA_SUB,
               visiMisi: visiMisi,
+              monografi: monografi,
+              sejarah: sejarah,
               struktur: {
                 title: struktur.title,
                 description: struktur.description,
