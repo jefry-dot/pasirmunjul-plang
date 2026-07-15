@@ -1,51 +1,28 @@
 /**
- * MOCK DATA SYSTEM - DESA PASIRMUNJUL
- * 
  * =========================================================================
- * SANITY CMS PREPARATION GUIDE:
+ * STATIC FALLBACK DATA FOR DESA PASIRMUNJUL (KKN VILLAGE WEB APP)
  * =========================================================================
- * 1. Install Sanity Client:
- *    npm install @sanity/client
  * 
- * 2. Create a sanity client config file (e.g., src/data/sanityClient.js):
- *    import { createClient } from '@sanity/client';
- *    export const client = createClient({
- *      projectId: 'your-project-id',
- *      dataset: 'production',
- *      useCdn: true,
- *      apiVersion: '2023-05-03',
- *    });
- * 
- * 3. In your views (e.g., HomeView.jsx, Dusun1View.jsx), import the client and fetch data:
- *    import { client } from '../data/sanityClient';
- *    
- *    const [villageInfo, setVillageInfo] = useState(null);
- *    const [loading, setLoading] = useState(true);
- * 
- *    useEffect(() => {
- *      client.fetch(`*[_type == "villageInfo"][0]`)
- *        .then((data) => {
- *          setVillageInfo(data);
- *          setLoading(false);
- *        })
- *        .catch(console.error);
- *    }, []);
+ * Data ini digunakan sebagai fallback jika Sanity CMS tidak dapat dijangkau
+ * atau belum diinisialisasi kontennya. Menjamin website tetap berfungsi,
+ * terlihat rapi, dan tidak memicu error visual.
  * =========================================================================
  */
 
 // General Village Information
 export const VILLAGE_INFO = {
-  name: "Desa Pasirmunjul",
+  name: "Pasirmunjul",
   district: "Sukatani",
   regency: "Purwakarta",
-  tagline: "Membangun Kemandirian Desa Melalui Inovasi, Keragaman Hayati, dan Pemberdayaan UMKM",
-  about: "Desa Pasirmunjul terletak di wilayah Kecamatan Sukatani, Kabupaten Purwakarta, Jawa Barat. Dikelilingi oleh perbukitan yang hijau dan udara yang sejuk, desa ini memiliki kekayaan alam yang melimpah serta potensi ekonomi kreatif masyarakat yang terus berkembang, khususnya di bidang pertanian, perkebunan pisang, dan produk olahan nira kelapa/aren.",
-  address: "Jl. Raya Pasirmunjul No. 1, Kecamatan Sukatani, Kabupaten Purwakarta, Provinsi Jawa Barat, Kode Pos 41167",
+  tagline: "Pasirmunjul Ngahiji",
+  about: "Desa Pasirmunjul terletak di Kecamatan Sukatani, Kabupaten Purwakarta, Jawa Barat. Dikelilingi oleh perbukitan yang hijau dan pemandangan alam yang asri, desa ini resmi mekar dari Desa Cianting pada tahun 1985. Nama Pasirmunjul sendiri diambil oleh masyarakat setempat dari gabungan kata Sunda 'Pasir' yang berarti perbukitan pasir dan 'Munjul' yang berarti menonjol di dataran tinggi, mencerminkan topografi wilayahnya yang subur di pegunungan.",
+  address: "Kantor Desa Pasirmunjul, Jl. Desa Pasirmunjul RT 1/1, Kecamatan Sukatani, Kabupaten Purwakarta, Jawa Barat 41167",
+  phone: "083100607316", // Pelayanan
   stats: [
-    { label: "Luas Wilayah", value: "348,5 Ha", icon: "Map" },
-    { label: "Jumlah Penduduk", value: "3.420 Jiwa", icon: "Users" },
-    { label: "Pembagian Hamlet (Dusun)", value: "3 Dusun", icon: "Home" },
-    { label: "Unit UMKM Aktif", value: "18 Usaha", icon: "ShoppingBag" }
+    { label: "Luas Wilayah", value: "585,858 Ha", icon: "Map" },
+    { label: "Jumlah Penduduk", value: "3.660 Jiwa", icon: "Users" },
+    { label: "Pembagian Dusun", value: "3 Dusun", icon: "Home" },
+    { label: "Total Kepala Keluarga", value: "1.244 KK", icon: "ShoppingBag" }
   ],
   googleMapsUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15855.972379308149!2d107.39127525541992!3d-6.522588399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e690ee0d1e5bdad%3A0xc3457a419ef2a23e!2sPasirmunjul%2C%20Kec.%20Sukatani%2C%20Kabupaten%20Purwakarta%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1720436800000!5m2!1sid!2sid"
 };
@@ -54,31 +31,34 @@ export const VILLAGE_INFO = {
 export const PROFILE_DESA_SUB = {
   sejarah: {
     title: "Sejarah Desa Pasirmunjul",
-    content: "Nama Desa Pasirmunjul diambil dari dua padanan kata bahasa Sunda, yaitu 'Pasir' yang berarti perbukitan atau gundukan tanah yang tinggi, dan 'Munjul' yang memiliki arti menonjol atau berada di atas yang lainnya. Secara historis, wilayah ini dahulu merupakan daerah transit bagi para pedagang komoditas pertanian dan hutan yang melintasi jalur Purwakarta menuju wilayah pegunungan sekitarnya.\n\nDesa Pasirmunjul secara resmi dimekarkan dan didirikan sebagai desa definitif untuk mempermudah rentang kendali pelayanan administrasi pemerintahan bagi masyarakat di lereng perbukitan Sukatani. Sejak berdirinya, para tokoh desa dan masyarakat berkomitmen untuk menjaga kelestarian alam sambil terus mengembangkan pertanian holtikultura dan olahan aren yang menjadi mata pencaharian pokok warga."
+    content: "Nama Desa Pasirmunjul diambil oleh masyarakat dari keadaan alam geografisnya. Kata 'Pasir' dalam bahasa Sunda berarti perbukitan atau gundukan tanah tinggi yang memiliki kandungan pasir, sedangkan kata 'Munjul' memiliki arti menonjol atau menyembul di atas dataran sekitarnya. Penggabungan nama ini menjadi identitas desa yang menggambarkan wilayah pemukiman yang asri di atas perbukitan pasir yang menonjol.\n\nSecara administratif, Desa Pasirmunjul resmi berdiri sebagai desa definitif pada tahun 1985 setelah dimekarkan dari Desa Cianting. Sejak saat itu, para tokoh masyarakat dan warga Pasirmunjul berkomitmen menjaga kelestarian alam sambil terus mengembangkan potensi pertanian padi, pisang, dan produk olahan nira aren yang menjadi penopang ekonomi keluarga."
   },
   visiMisi: {
     title: "Visi dan Misi Desa Pasirmunjul",
-    visi: "Pasirmunjul yang Maju, Sejahtera, Mandiri, dan Berkarakter berbasis Optimalisasi Sektor Pertanian serta Pemberdayaan Wirausaha Lokal.",
+    visi: "Desa Pasirmunjul Maju Bermartabat Menuju Kemandirian Tahun 2029",
     misi: [
-      "Meningkatkan kualitas tata kelola pemerintahan desa yang bersih, transparan, dan responsif melalui pemanfaatan teknologi informasi.",
-      "Mengembangkan sektor pertanian, perkebunan pisang, dan irigasi sungai terpadu guna mendukung ketahanan pangan warga.",
-      "Mendorong pertumbuhan industri rumah tangga dan UMKM (seperti gula aren dan kerajinan lokal) melalui pembinaan, perbaikan kemasan, dan pemasaran digital.",
-      "Meningkatkan infrastruktur jalan penghubung antar-dusun serta akses pelayanan kesehatan dan pendidikan yang merata.",
-      "Melestarikan nilai-nilai kebudayaan lokal gotong royong dan menjaga kelestarian ekosistem lingkungan hidup di wilayah perbukitan."
+      "Mewujudkan tatakelola Pemerintah Desa yang efektif, efisien serta penguatan kemitraan Pemdes, lembaga desa dan masyarakat.",
+      "Meningkatkan ketersediaan kualitas infrastruktur serta pengelolaan lingkungan hidup yang berkelanjutan.",
+      "Meningkatkan pelayanan kesehatan, pendidikan dan kesejahteraan masyarakat.",
+      "Meningkatkan kualitas Sumber Daya Manusia (SDM).",
+      "Membangun perekonomian desa yang tangguh.",
+      "Mengoptimalkan pelayanan prima kepada masyarakat untuk mempercepat daya guna dan hasil guna."
     ]
   },
   struktur: {
     title: "Struktur Pemerintahan Desa Pasirmunjul",
     officials: [
-      { role: "Kepala Desa", name: "H. Ahmad Hidayat, S.Sos." },
-      { role: "Sekretaris Desa", name: "Rizal Firmansyah, A.Md." },
-      { role: "Kaur Keuangan", name: "Siti Rahmawati" },
-      { role: "Kaur Umum & Tata Usaha", name: "Eko Prasetyo" },
-      { role: "Kasi Pemerintahan", name: "Cecep Supriatna" },
-      { role: "Kasi Kesejahteraan Rakyat", name: "Dadan Ramdani" },
-      { role: "Kepala Dusun 1", name: "Jajang Nurjaman" },
-      { role: "Kepala Dusun 2", name: "Cecep Hidayat" },
-      { role: "Kepala Dusun 3", name: "Maman" }
+      { role: "Kepala Desa", name: "Usep" },
+      { role: "Sekretaris Desa", name: "Sulistianingsih" },
+      { role: "Kaur Tata Usaha & Umum", name: "Fadhil Kurniawan" },
+      { role: "Kaur Keuangan", name: "Anisa Rahmah" },
+      { role: "Kaur Perencanaan", name: "Asep Endan" },
+      { role: "Kasi Pemerintahan", name: "Andri" },
+      { role: "Kasi Kesejahteraan", name: "Fitri" },
+      { role: "Kasi Pelayanan", name: "Indriani" },
+      { role: "Kepala Dusun I", name: "Dede Hamid Sutisna" },
+      { role: "Kepala Dusun II", name: "Hendi" },
+      { role: "Kepala Dusun III", name: "Mulyadin" }
     ]
   },
   monografi: {
@@ -87,23 +67,24 @@ export const PROFILE_DESA_SUB = {
       { name: "Provinsi", value: "Jawa Barat" },
       { name: "Kabupaten", value: "Purwakarta" },
       { name: "Kecamatan", value: "Sukatani" },
-      { name: "Luas Wilayah", value: "348,5 Hektar (Ha)" },
-      { name: "Batas Wilayah Utara", value: "Desa Sukatani" },
-      { name: "Batas Wilayah Selatan", value: "Desa Cilalawi" },
-      { name: "Batas Wilayah Timur", value: "Desa Tajursindang" },
-      { name: "Batas Wilayah Barat", value: "Desa Panyindangan" }
+      { name: "Tahun Pemekaran", value: "1985 (dari Desa Cianting)" },
+      { name: "Luas Wilayah", value: "585,858 Hektar (Ha)" },
+      { name: "Batas Wilayah Utara", value: "Desa Sukatani, Kec. Sukatani" },
+      { name: "Batas Wilayah Selatan", value: "Desa Cianting, Kec. Sukatani" },
+      { name: "Batas Wilayah Timur", value: "Desa Sukajadi, Kec. Pondok Salam" },
+      { name: "Batas Wilayah Barat", value: "Desa Cibodas, Kec. Sukatani" }
     ],
     population: [
-      { category: "Jumlah Total Penduduk", value: "3.420 Jiwa" },
-      { category: "Jumlah Laki-laki", value: "1.745 Jiwa" },
-      { category: "Jumlah Perempuan", value: "1.675 Jiwa" },
-      { category: "Jumlah Kepala Keluarga (KK)", value: "985 KK" }
+      { category: "Jumlah Total Penduduk", value: "3.660 Jiwa (bulan Juni)" },
+      { category: "Jumlah Laki-laki", value: "1.760 Jiwa" },
+      { category: "Jumlah Perempuan", value: "1.898 Jiwa" },
+      { category: "Jumlah Kepala Keluarga (KK)", value: "1.244 KK" }
     ],
     livelihoods: [
-      { job: "Petani & Buruh Tani", count: "1.240 Orang" },
-      { job: "Pelaku UMKM / Wiraswasta", count: "185 Orang" },
-      { job: "Karyawan Swasta", count: "320 Orang" },
-      { job: "PNS / TNI / POLRI", count: "45 Orang" }
+      { job: "Buruh Harian Lepas (Mayoritas)", count: "Mayoritas Utama" },
+      { job: "Petani & Pekebun", count: "Sektor Unggulan" },
+      { job: "Kuli Bangunan / Serabutan", count: "Sektor Penopang" },
+      { job: "PNS / Swasta / Jasa", count: "Sektor Pelayanan" }
     ]
   }
 };
@@ -112,33 +93,34 @@ export const PROFILE_DESA_SUB = {
 export const DUSUN_DATA = {
   "dusun-1": {
     id: "dusun-1",
-    name: "Dusun 1 (Sentra UMKM)",
-    lead: "Kepala Dusun 1 - Bpk. Jajang Nurjaman",
-    profile: "Dusun 1 merupakan pusat denyut nadi perekonomian dan kreativitas warga Desa Pasirmunjul. Di dusun ini, wirausaha lokal (UMKM) berkembang pesat dengan memanfaatkan hasil alam sekitar. Salah satu produk unggulan utama yang diproduksi secara turun-temurun adalah Gula Aren tradisional berstandar alami tinggi.",
-    whatsappContact: "6281234567890", // Ganti dengan nomor WA penjual/Kordes
+    name: "Dusun 1 (Kp. Cigintung)",
+    lead: "Kepala Dusun 1 - Bpk. Dede Hamid Sutisna",
+    profile: "Dusun 1 dipimpin oleh Bapak Dede Hamid Sutisna (Bpk. Misna). Meliputi wilayah administratif RT 01 hingga RT 06 yang terbagi ke dalam RW 01 dan RW 02. Berada di sisi barat desa, dusun ini berbatasan langsung dengan Desa Cianting. Sebagian besar warga aktif mengembangkan pertanian hortikultura dan komoditas pendukung pangan desa.",
+    whatsappContact: "6283876776079",
+    batas: {
+      utara: "Desa Sukatani",
+      selatan: "Gunung Hejo",
+      timur: "Kp. Cigintung, Pasirmunjul",
+      barat: "Desa Cianting, Sukatani"
+    },
     umkm: {
-      name: "Produksi Gula Aren Tradisional",
-      description: "Gula aren dari Dusun 1 Pasirmunjul dibuat langsung dari nira pohon aren pilihan. Diolah secara higienis menggunakan metode tradisional kayu bakar untuk mempertahankan aroma khas kelapa dan karamel alami yang pekat.",
+      name: "Produksi Pengolahan Gaplek",
+      description: "Gaplek diproduksi secara tradisional oleh warga Dusun 1 dari bahan singkong pilihan sebagai makanan cadangan karbohidrat lokal yang tahan lama dan bernilai ekonomi.",
       steps: [
         {
           no: "01",
-          title: "Penyadapan Nira (Nderes)",
-          desc: "Nira disadap setiap pagi dan sore dari bunga jantan pohon aren menggunakan wadah bambu (bumbung) steril."
+          title: "Pengupasan & Pencucian",
+          desc: "Singkong hasil panen kebun dikupas bersih dan dicuci menggunakan air mengalir."
         },
         {
           no: "02",
-          title: "Penyaringan & Perebusan",
-          desc: "Nira hasil sadapan disaring bersih kemudian direbus dalam wajan besar dengan kayu bakar selama 4-5 jam."
+          title: "Pemotongan & Penjemuran",
+          desc: "Singkong dipotong sesuai ukuran kemudian dijemur di bawah terik matahari hingga kadar air menyusut habis."
         },
         {
           no: "03",
-          title: "Pengadukan & Pengentalan",
-          desc: "Setelah nira pekat berwarna cokelat keemasan, adonan terus diaduk cepat hingga mengental dan siap cetak."
-        },
-        {
-          no: "04",
-          title: "Pencetakan Tradisional",
-          desc: "Adonan dituangkan ke cetakan tempurung kelapa atau bambu alami hingga dingin dan mengeras sempurna."
+          title: "Penyimpanan Lumbung",
+          desc: "Gaplek kering disimpan di dalam lumbung kayu yang kering dan sejuk agar tahan hingga berbulan-bulan."
         }
       ]
     },
@@ -146,122 +128,142 @@ export const DUSUN_DATA = {
       {
         id: "d1-img1",
         src: "/images/dusun_1_aren.jpg",
-        title: "Pohon Aren Alami",
-        description: "Pohon aren yang tumbuh subur di wilayah hutan Dusun 1."
-      },
-      {
-        id: "d1-img2",
-        src: "https://images.unsplash.com/photo-1596701062351-df5f8adc554c?q=80&w=600&auto=format&fit=crop",
-        title: "Perebusan Nira",
-        description: "Perebusan nira aren menggunakan wajan besar tradisional dengan kayu bakar."
-      },
-      {
-        id: "d1-img3",
-        src: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=600&auto=format&fit=crop",
-        title: "Produk Gula Aren Cetak",
-        description: "Gula aren cetak tradisional siap dikemas dan dipasarkan."
+        title: "Lanskap Dusun 1",
+        description: "Suasana pagi berkabut di wilayah perkebunan Dusun 1 Pasirmunjul."
       }
     ]
   },
   "dusun-2": {
     id: "dusun-2",
-    name: "Dusun 2 (Kawasan Pemukiman & Konservasi)",
-    lead: "Kepala Dusun 2 - Bpk. Cecep Hidayat",
-    profile: "Dusun 2 merupakan wilayah pemukiman asri yang memadukan kawasan pertanian pangan warga dan wilayah konservasi air. Saat ini, Dusun 2 sedang dipersiapkan untuk menjadi sentra pengembangan pertanian organik terpadu dan kerajinan anyaman bambu khas Purwakarta.",
-    message: "Konten informasi program kerja KKN, UMKM, atau wisata Dusun 2 sedang dalam proses penyusunan dan kurasi bersama perangkat desa. Halaman ini akan segera terisi data lengkap.",
+    name: "Dusun 2 (Kp. Telaga)",
+    lead: "Kepala Dusun 2 - Bpk. Hendi",
+    profile: "Dusun 2 berpusat di Kampung Telaga dengan kepemimpinan Bapak Hendi. Mengelola wilayah administrasi RT 07 hingga RT 10 yang terbagi ke dalam RW 03 dan RW 06. Dusun 2 terkenal dengan kekayaan alamnya yang melimpah, khususnya komoditas pertanian padi sawah, lahang segar, dan industri gula aren tradisional.",
+    whatsappContact: "6285956320480",
+    batas: {
+      utara: "Desa Sukatani, Kec. Sukatani",
+      selatan: "Desa Gunung Hejo, Darangdan",
+      timur: "Kp. Randiah, Kec. Sukatani",
+      barat: "Kp. Sukamulya, Kec. Sukatani"
+    },
+    umkm: {
+      name: "Sentra Gula Aren & Lahang Segar",
+      description: "Penyadapan lahang segar dari nira pohon aren alami yang kemudian diolah menggunakan tungku kayu bakar menjadi gula aren cetak khas berkualitas premium.",
+      steps: [
+        {
+          no: "01",
+          title: "Penyadapan Air Lahang",
+          desc: "Nira aren segar (lahang) diambil setiap pagi dari tangkai bunga aren menggunakan wadah bambu."
+        },
+        {
+          no: "02",
+          title: "Perebusan Kental",
+          desc: "Lahang disaring bersih lalu direbus di atas tungku kayu bakar selama berjam-jam hingga berubah mengental pekat."
+        },
+        {
+          no: "03",
+          title: "Pencetakan Tradisional",
+          desc: "Adonan panas dituangkan ke cetakan tempurung kelapa atau bambu alami dan dibiarkan mendingin hingga mengeras sempurna."
+        }
+      ]
+    },
     gallery: [
       {
         id: "d2-img1",
         src: "/images/dusun_2_village.jpg",
-        title: "Kawasan Pemukiman Bersih",
-        description: "Lingkungan perumahan warga yang bersih dan asri di Dusun 2."
+        title: "Pemukiman Kampung Telaga",
+        description: "Suasana pemukiman warga yang bersih, tertata rapi, dan asri di Dusun 2."
       }
     ]
   },
   "dusun-3": {
     id: "dusun-3",
-    name: "Dusun 3 (Kekayaan Alam & Pertanian)",
-    lead: "Kepala Dusun 3 - Bpk. Maman",
-    profile: "Dusun 3 dianugerahi tanah yang sangat subur, sungai mengalir jernih, serta bentang alam pertanian yang menakjubkan. Dusun ini berfokus pada sektor ketahanan pangan dan perkebunan hortikultura, menjadikannya lumbung hijau utama bagi seluruh masyarakat Pasirmunjul.",
-    characteristics: [
-      {
-        title: "Aliran Sungai Alami",
-        desc: "Sungai jernih mengalir sepanjang tahun, menjadi sumber irigasi utama persawahan warga sekaligus potensi wisata air yang asri."
-      },
-      {
-        title: "Perkebunan Pisang",
-        desc: "Kawasan kebun pisang yang membentang luas menghasilkan komoditas Pisang Tanduk dan Pisang Uli berkualitas tinggi."
-      }
-    ],
-    narrative: "Dalam program kerja KKN mahasiswa, Dusun 3 diproyeksikan sebagai pusat eduwisata berbasis pertanian (Agro-Eduwisata). Dengan memanfaatkan keindahan sungai dan perkebunan pisang, pengembangan jalur trekking ramah lingkungan, wisata susur sungai mini, serta pengolahan limbah pelepah pisang menjadi kerajinan bernilai seni sedang direncanakan guna mendongkrak ekonomi warga secara berkelanjutan.",
+    name: "Dusun 3 (Kp. Randiah)",
+    lead: "Kepala Dusun 3 - Bpk. Mulyadin",
+    profile: "Dusun 3 dipimpin oleh Bapak Mulyadin, menaungi wilayah Kampung Randiah yang mencakup RT 11 hingga RT 14 (RW 04 & RW 05). Dusun ini dianugerahi aliran air jernih dari Sungai Cibingbin serta perkebunan pisang uli dan pisang tanduk yang subur. Sebagian besar hasil kebun dijual segar, dan sebagian diolah menjadi selai pisang.",
+    whatsappContact: "6283863546513",
+    batas: {
+      utara: "Desa Sukatani, Kec. Sukatani",
+      selatan: "Desa Gununghejo, Kec. Darangdan",
+      timur: "Desa Sukajadi, Kec. Pondok Salam",
+      barat: "Kp. Telaga, Kec. Sukatani"
+    },
+    umkm: {
+      name: "Produksi Selai Pisang & Komoditas Segar",
+      description: "Hasil perkebunan pisang yang melimpah sebagian dipasarkan segar dan sebagian lagi diproduksi menjadi olahan selai pisang yang manis alami.",
+      steps: [
+        {
+          no: "01",
+          title: "Sortasi Hasil Panen",
+          desc: "Pisang dan padi dipanen dari perkebunan warga, disortir berdasarkan tingkat kematangan."
+        },
+        {
+          no: "02",
+          title: "Pengolahan Selai",
+          desc: "Pisang yang matang diolah secara bersih dan higienis menjadi produk olahan selai pisang manis."
+        },
+        {
+          no: "03",
+          title: "Pengepakan & Distribusi",
+          desc: "Selai pisang dikemas menarik, sementara pisang mentah dan padi langsung dijual ke pasar."
+        }
+      ]
+    },
     gallery: [
       {
         id: "d3-img1",
         src: "/images/dusun_3_nature.jpg",
-        title: "Pertanian & Sungai",
-        description: "Keindahan alam dan aliran air pegunungan yang subur di Dusun 3."
-      },
-      {
-        id: "d3-img2",
-        src: "https://images.unsplash.com/photo-1528825871115-3581a5387919?q=80&w=600&auto=format&fit=crop",
-        title: "Perkebunan Pisang Subur",
-        description: "Pohon pisang tumbuh rindang menjadi andalan hasil tani warga Dusun 3."
-      },
-      {
-        id: "d3-img3",
-        src: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600&auto=format&fit=crop",
-        title: "Bentang Sawah Hijau",
-        description: "Sawah hijau berundak khas pegunungan di Dusun 3."
+        title: "Lembah Pertanian Dusun 3",
+        description: "Perkebunan pisang dan sawah subur yang membentang di sekitar Sungai Cibingbin."
       }
     ]
   }
 };
 
-// Accordion specific summaries for each Dusun (matching user's attached images)
+// Accordion specific summaries for each Dusun
 export const DUSUN_ACCORDION = [
   {
     id: "dusun-1",
     num: 1,
-    title: "Dusun 1",
-    subtitle: "Sentra Pertanian Padi & Palawija",
+    title: "Dusun 1 (Kp. Cigintung)",
+    subtitle: "Sentra Olahan Gaplek Pangan",
     icon: "🌾",
-    lead: "Bpk. Jajang Nurjaman",
-    profile: "Dusun 1 merupakan wilayah persawahan utama Desa Pasirmunjul. Sebagian besar warganya menggantungkan hidup dari bertani padi dan palawija, ditopang sistem irigasi dari aliran sungai setempat serta kelompok tani yang aktif menjalankan program penyuluhan pertanian.",
+    lead: "Bpk. Dede Hamid Sutisna (Misna)",
+    profile: "Dusun 1 mencakup RT 01 hingga RT 06 (RW 01 & RW 02) dengan komoditas unggulan gaplek singkong tradisional.",
     batas: {
-      utara: "Dusun 2",
-      selatan: "Desa Cianting",
-      timur: "Areal Perkebunan",
-      barat: "Jalan Desa Pasirmunjul"
+      utara: "Desa Sukatani",
+      selatan: "Gunung Hejo",
+      timur: "Kp. Cigintung",
+      barat: "Desa Cianting"
     }
   },
   {
     id: "dusun-2",
     num: 2,
-    title: "Dusun 2",
-    subtitle: "Perkebunan & Kawasan Penghijauan",
+    title: "Dusun 2 (Kp. Telaga)",
+    subtitle: "Sentra Gula Aren & Sawah Padi",
     icon: "🌲",
-    lead: "Bpk. Cecep Hidayat",
-    profile: "Dusun 2 berada di area perbukitan yang menjadi fokus program penghijauan dan konservasi lahan bersama Pemerintah Kabupaten Purwakarta. Warga mengembangkan tanaman produktif seperti durian, kelengkeng, dan mangga sebagai bagian dari pemulihan lahan kritis.",
+    lead: "Bpk. Hendi (Kadus)",
+    profile: "Dusun 2 mencakup RT 07 hingga RT 10 (RW 03 & RW 06) dengan produk unggulan gula aren cetak dan lahang segar.",
     batas: {
-      utara: "Dusun 3",
-      selatan: "Dusun 1",
-      timur: "Hutan Rakyat",
-      barat: "Kecamatan Sukatani"
+      utara: "Desa Sukatani",
+      selatan: "Desa Gunung Hejo",
+      timur: "Kp. Randiah",
+      barat: "Kp. Sukamulya"
     }
   },
   {
     id: "dusun-3",
     num: 3,
-    title: "Dusun 3",
-    subtitle: "Peternakan Rakyat & Kerajinan",
+    title: "Dusun 3 (Kp. Randiah)",
+    subtitle: "Pariwisata Sungai & Perkebunan Pisang",
     icon: "🐂",
-    lead: "Bpk. Maman",
-    profile: "Dusun 3 difokuskan pada sektor peternakan sapi dan kambing rakyat serta industri kreatif kerajinan anyaman bambu. Mahasiswa KKN mendampingi warga dalam diversifikasi produk olahan dan pengolahan limbah organik peternakan.",
+    lead: "Bpk. Mulyadin (Kadus)",
+    profile: "Dusun 3 mencakup RT 11 hingga RT 14 (RW 04 & RW 05) dengan pariwisata Sungai Cibingbin dan kebun pisang subur.",
     batas: {
       utara: "Desa Sukatani",
-      selatan: "Dusun 2",
-      timur: "Sungai Citarum / Bentang Alam",
-      barat: "Hutan Lindung"
+      selatan: "Desa Gununghejo",
+      timur: "Desa Sukajadi",
+      barat: "Kp. Telaga"
     }
   }
 ];
@@ -281,9 +283,9 @@ export const BLOG_POSTS = [
   },
   {
     id: "post-2",
-    title: "Pelatihan Higienitas Kemasan Gula Aren UMKM Dusun 1",
+    title: "Pelatihan Higienitas Kemasan Gula Aren UMKM Dusun 2",
     excerpt: "Untuk memperluas pangsa pasar ke luar Purwakarta, produsen gula aren lokal mendapatkan pelatihan teknik pengemasan ramah lingkungan dan pembuatan label produk.",
-    content: "Dusun 1 Pasirmunjul terkenal sebagai penghasil gula aren cetak bermutu tinggi. Namun, kemasan tradisional berupa daun kelapa kering dinilai kurang tahan lama jika dikirim ke luar kota.\n\nBekerja sama dengan pelaku industri kreatif, mahasiswa KKN mendampingi warga untuk mendesain kemasan standing pouch kertas cokelat yang dilengkapi ziplock dan label edukasi kandungan gizi. Hal ini tidak hanya menambah umur simpan gula, tetapi juga memberikan kesan premium sehingga dapat dijual dengan harga yang lebih kompetitif di platform online.",
+    content: "Dusun 2 Pasirmunjul terkenal sebagai penghasil gula aren cetak bermutu tinggi. Namun, kemasan tradisional berupa daun kelapa kering dinilai kurang tahan lama jika dikirim ke luar kota.\n\nBekerja sama dengan pelaku industri kreatif, mahasiswa KKN mendampingi warga untuk mendesain kemasan standing pouch kertas cokelat yang dilengkapi ziplock dan label edukasi kandungan gizi. Hal ini tidak hanya menambah umur simpan gula, tetapi juga memberikan kesan premium sehingga dapat dijual dengan harga yang lebih kompetitif di platform online.",
     date: "4 Juli 2026",
     author: "Tim KKN Pasirmunjul 2026",
     readTime: "4 Menit Baca",

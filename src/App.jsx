@@ -178,26 +178,26 @@ export default function App() {
         setMonografi({
           title: data.title || 'Monografi Desa Pasirmunjul',
           general: [
-            { name: 'Provinsi', value: data.provinsi || 'Jawa Barat' },
-            { name: 'Kabupaten', value: data.kabupaten || 'Purwakarta' },
-            { name: 'Kecamatan', value: data.kecamatan || 'Sukatani' },
-            { name: 'Luas Wilayah', value: data.luasWilayah || '348,5 Hektar (Ha)' },
-            { name: 'Batas Wilayah Utara', value: data.batasUtara || 'Desa Sukatani' },
-            { name: 'Batas Wilayah Selatan', value: data.batasSelatan || 'Desa Cilalawi' },
-            { name: 'Batas Wilayah Timur', value: data.batasTimur || 'Desa Tajursindang' },
-            { name: 'Batas Wilayah Barat', value: data.batasBarat || 'Desa Panyindangan' }
+            { name: 'Provinsi', value: data.provinsi || '-' },
+            { name: 'Kabupaten', value: data.kabupaten || '-' },
+            { name: 'Kecamatan', value: data.kecamatan || '-' },
+            { name: 'Luas Wilayah', value: data.luasWilayah || '-' },
+            { name: 'Batas Wilayah Utara', value: data.batasUtara || '-' },
+            { name: 'Batas Wilayah Selatan', value: data.batasSelatan || '-' },
+            { name: 'Batas Wilayah Timur', value: data.batasTimur || '-' },
+            { name: 'Batas Wilayah Barat', value: data.batasBarat || '-' }
           ],
           population: [
-            { category: 'Jumlah Total Penduduk', value: data.totalPenduduk || '3.420 Jiwa' },
-            { category: 'Jumlah Laki-laki', value: data.lakiLaki || '1.745 Jiwa' },
-            { category: 'Jumlah Perempuan', value: data.perempuan || '1.675 Jiwa' },
-            { category: 'Jumlah Kepala Keluarga (KK)', value: data.jumlahKK || '985 KK' }
+            { category: 'Jumlah Total Penduduk', value: data.totalPenduduk || '-' },
+            { category: 'Jumlah Laki-laki', value: data.lakiLaki || '-' },
+            { category: 'Jumlah Perempuan', value: data.perempuan || '-' },
+            { category: 'Jumlah Kepala Keluarga (KK)', value: data.jumlahKK || '-' }
           ],
           livelihoods: [
-            { job: 'Petani & Buruh Tani', count: data.petani || '1.240 Orang' },
-            { job: 'Pelaku UMKM / Wiraswasta', count: data.umkm || '185 Orang' },
-            { job: 'Karyawan Swasta', count: data.karyawan || '320 Orang' },
-            { job: 'PNS / TNI / POLRI', count: data.pns || '45 Orang' }
+            { job: 'Petani & Buruh Tani', count: data.petani || '-' },
+            { job: 'Pelaku UMKM / Wiraswasta', count: data.umkm || '-' },
+            { job: 'Karyawan Swasta', count: data.karyawan || '-' },
+            { job: 'PNS / TNI / POLRI', count: data.pns || '-' }
           ]
         });
       }

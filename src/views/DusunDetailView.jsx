@@ -115,11 +115,6 @@ export default function DusunDetailView({ dusunId, setView }) {
     ? dusun.coverImageUrl 
     : (localFallback.gallery && localFallback.gallery[0] ? localFallback.gallery[0].src : null);
 
-  // Profile image:
-  const section1Image = dusun.profileImageUrl 
-    ? dusun.profileImageUrl 
-    : (localFallback.gallery && localFallback.gallery[0] ? localFallback.gallery[0].src : 'https://via.placeholder.com/600x800');
-
   // UMKM image:
   const section2Image = dusun.umkmImageUrl 
     ? dusun.umkmImageUrl 
@@ -177,18 +172,9 @@ export default function DusunDetailView({ dusunId, setView }) {
 
       {/* 2. PROFILE SECTION (Constrained inside margin, starts directly below the full-screen banner) */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
-        <section ref={contentRef} className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-12 items-center bg-white p-6 sm:p-10 border border-stone-200 scroll-mt-12 shadow-sm rounded-sm">
-          {/* Left Column: Portrait Profile Image */}
-          <div className="md:col-span-5 aspect-[3/4] sm:aspect-square md:aspect-[3/4] bg-stone-50 border border-stone-200 overflow-hidden">
-            <img 
-              src={section1Image} 
-              alt="Kepala Dusun" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Right Column: Bio Details & CTA button */}
-          <div className="md:col-span-7 space-y-6">
+        <section ref={contentRef} className="bg-white p-6 sm:p-10 border border-stone-200 scroll-mt-12 shadow-sm rounded-sm">
+          {/* Bio Details & CTA button */}
+          <div className="space-y-6">
             <div className="space-y-2">
               <p className="text-[10px] text-emerald-700 font-extrabold uppercase tracking-widest">Profil Kepemimpinan</p>
               <h2 className="font-display font-black text-stone-900 text-2xl uppercase tracking-wider">

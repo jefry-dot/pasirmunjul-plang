@@ -1,10 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, Printer, ChevronDown } from 'lucide-react';
 import { DUSUN_ACCORDION } from '../data/mockData';
+import { client } from '../data/sanityClient';
 
 export default function DusunAccordion({ setView }) {
-  // Default expanded item is Dusun 1
+  const [dusunList, setDusunList] = useState(DUSUN_ACCORDION);
   const [expandedId, setExpandedId] = useState('dusun-1');
+
+  useEffect(() => {
+    // Query all three Dusun documents from Sanity, ordered by their ID
+    client.fetch(`*[_type == "dusun"] | order(_id asc) {
+      "id": _id,
+      name,
+      lead,
+      subtitle,
+      icon,
+      profile,
+      batas { utara, selatan, timur, barat }
+    }`)
+    .then((data) => {
+      if (data && data.length > 0) {
+        // Map Sanity fields to structure expected by Accordion
+        const mappedList = data.map((item, idx) => {
+          const num = idx + 1; // 1, 2, 3
+          // Extract default values from mockData matching this dusun number as base fallback
+          const localBase = DUSUN_ACCORDION[idx] || {};
+          return {
+            id: item.id || `dusun-${num}`,
+            num: num,
+            title: item.name || localBase.title || `Dusun ${num}`,
+            subtitle: item.subtitle || localBase.subtitle || '-',
+            icon: item.icon || localBase.icon || '🌾',
+            lead: item.lead || localBase.lead || '-',
+            profile: item.profile || localBase.profile || '-',
+            batas: {
+              utara: item.batas?.utara || localBase.batas?.utara || '-',
+              selatan: item.batas?.selatan || localBase.batas?.selatan || '-',
+              timur: item.batas?.timur || localBase.batas?.timur || '-',
+              barat: item.batas?.barat || localBase.batas?.barat || '-'
+            }
+          };
+        });
+        setDusunList(mappedList);
+      }
+    })
+    .catch((err) => {
+      console.error("Gagal mengambil data dusun untuk accordion:", err);
+    });
+  }, []);
 
   const toggleAccordion = (id) => {
     setExpandedId(prev => (prev === id ? null : id));
@@ -47,7 +90,7 @@ export default function DusunAccordion({ setView }) {
 
   return (
     <div className="space-y-4">
-      {DUSUN_ACCORDION.map((item) => {
+      {dusunList.map((item) => {
         const isExpanded = expandedId === item.id;
         const styles = getDusunStyles(item.num);
 
