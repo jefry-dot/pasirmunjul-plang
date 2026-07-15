@@ -268,39 +268,5 @@ export const DUSUN_ACCORDION = [
   }
 ];
 
-// News/Blog Data ("Kabar Desa")
-export const BLOG_POSTS = [
-  {
-    id: "post-1",
-    title: "Peluncuran Sistem Informasi Desa Pasirmunjul Berbasis QR Code",
-    excerpt: "Inovasi baru dari Mahasiswa KKN untuk mempermudah wisatawan dan warga dalam mengakses profil dusun dan UMKM lokal secara instan lewat pemindaian smartphone.",
-    content: "PURWAKARTA — Mahasiswa KKN di Desa Pasirmunjul meluncurkan inovasi Sistem Informasi Desa berbasis QR Code. Papan informasi QR Code dipasang secara strategis di tiga titik dusun: Dusun 1 (Sentra UMKM), Dusun 2, dan Dusun 3 (Kawasan Pertanian & Sungai).\n\nKepala Desa Pasirmunjul menyambut baik inovasi ini: 'Dengan adanya QR Code, tamu dari luar kota maupun investor UMKM bisa dengan cepat mengakses informasi potensi desa kami hanya dengan mengarahkan kamera ponsel.'\n\nKe depannya, sistem ini akan diintegrasikan dengan portal peta desa digital dan data inventori produk kerajinan serta kuliner dari UMKM lokal.",
-    date: "8 Juli 2026",
-    author: "Tim KKN Pasirmunjul 2026",
-    readTime: "3 Menit Baca",
-    image: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?q=80&w=600&auto=format&fit=crop",
-    category: "KKN Update"
-  },
-  {
-    id: "post-2",
-    title: "Pelatihan Higienitas Kemasan Gula Aren UMKM Dusun 2",
-    excerpt: "Untuk memperluas pangsa pasar ke luar Purwakarta, produsen gula aren lokal mendapatkan pelatihan teknik pengemasan ramah lingkungan dan pembuatan label produk.",
-    content: "Dusun 2 Pasirmunjul terkenal sebagai penghasil gula aren cetak bermutu tinggi. Namun, kemasan tradisional berupa daun kelapa kering dinilai kurang tahan lama jika dikirim ke luar kota.\n\nBekerja sama dengan pelaku industri kreatif, mahasiswa KKN mendampingi warga untuk mendesain kemasan standing pouch kertas cokelat yang dilengkapi ziplock dan label edukasi kandungan gizi. Hal ini tidak hanya menambah umur simpan gula, tetapi juga memberikan kesan premium sehingga dapat dijual dengan harga yang lebih kompetitif di platform online.",
-    date: "4 Juli 2026",
-    author: "Tim KKN Pasirmunjul 2026",
-    readTime: "4 Menit Baca",
-    image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=600&auto=format&fit=crop",
-    category: "UMKM"
-  },
-  {
-    id: "post-3",
-    title: "Potensi Eduwisata Sungai dan Pertanian di Dusun 3",
-    excerpt: "Keindahan sungai berbatu dan perkebunan pisang Dusun 3 dinilai layak untuk dikembangkan menjadi destinasi agro-wisata keluarga ramah anak.",
-    content: "Sungai yang mengalir di sepanjang Dusun 3 Pasirmunjul memiliki air yang jernih dan aliran yang tenang. Di tepian sungai, pemandangan kebun pisang berlatar belakang bukit hijau memberikan suasana yang damai.\n\nDalam focus group discussion (FGD) warga bersama mahasiswa KKN, muncul gagasan pembangunan dermaga foto bambu, jalur bersepeda di tepi sawah, serta paket wisata memetik pisang langsung dari pohon. Rencana ini diharapkan mendapat dukungan dana desa untuk pembukaan infrastruktur akses jalan setapak tahun depan.",
-    date: "30 Juni 2026",
-    author: "Tim KKN Pasirmunjul 2026",
-    readTime: "5 Menit Baca",
-    image: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600&auto=format&fit=crop",
-    category: "Agrowisata"
-  }
-];
+// News/Blog Data ("Kabar Desa") — Kosong, artikel diambil dari Sanity CMS
+export const BLOG_POSTS = [];
