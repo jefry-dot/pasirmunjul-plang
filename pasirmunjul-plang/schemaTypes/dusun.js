@@ -127,8 +127,9 @@ export default {
     },
     {
       name: 'gallery',
-      title: 'Galeri Foto Kegiatan / Potensi Tambahan',
+      title: 'Galeri Foto Potensi / Produk Dusun',
       type: 'array',
+      description: 'Upload foto-foto produk/potensi dusun. Foto pertama akan tampil besar di website, sisanya muncul saat diklik.',
       of: [
         {
           type: 'image',
@@ -139,6 +140,25 @@ export default {
           ]
         }
       ]
+    },
+    {
+      name: 'mapsImage',
+      title: 'Gambar Peta Lokasi (Screenshot Maps)',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Upload screenshot Google Maps lokasi dusun/kampung.'
+    },
+    {
+      name: 'mapsEmbedUrl',
+      title: 'Google Maps Embed URL',
+      type: 'url',
+      description: 'URL embed Google Maps. Cara: Buka Google Maps → klik Share → Embed a map → copy URL src dari tag iframe.'
+    },
+    {
+      name: 'mapsLinkUrl',
+      title: 'Link Google Maps (Buka di Maps)',
+      type: 'url',
+      description: 'Link langsung ke Google Maps. Cara: Buka Google Maps → klik Share → Copy link.'
     }
   ]
 }
