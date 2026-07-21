@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  ArrowLeft, PhoneCall, Check, Compass, MapPin, Landmark, Award
+  ArrowLeft, PhoneCall, MapPin, Home, Users, Layers, Leaf
 } from 'lucide-react';
 import { client } from '../data/sanityClient';
 import { DUSUN_DATA, VILLAGE_INFO } from '../data/mockData';
@@ -8,23 +8,14 @@ import PhotoGallery from '../components/PhotoGallery';
 
 export default function DusunDetailView({ dusunId, setView }) {
   const [dusun, setDusun] = useState(null);
-  const [villageAbout, setVillageAbout] = useState(VILLAGE_INFO.about);
   const [loading, setLoading] = useState(true);
   
   const contentRef = useRef(null);
 
-  // Fetch individual dusun data and village about text from Sanity CMS
+  // Fetch individual dusun data from Sanity CMS
   useEffect(() => {
     setLoading(true);
-    
-    // 1. Fetch village info about text for Section 1
-    client.fetch(`*[_type == "villageInfo"][0].about`)
-      .then((aboutText) => {
-        if (aboutText) setVillageAbout(aboutText);
-      })
-      .catch((err) => console.error("Error fetching village info for dusun view:", err));
 
-    // 2. Fetch dusun info
     client.fetch(`*[_type == "dusun" && (_id == $dusunId || dusunId.current == $dusunId)][0] {
       name,
       lead,
@@ -33,11 +24,7 @@ export default function DusunDetailView({ dusunId, setView }) {
       profile,
       whatsappContact,
       batas { utara, selatan, timur, barat },
-      umkm { name, description, steps[] { no, title, desc } },
-      characteristics[] { title, desc },
-      narrative,
       "coverImageUrl": coverImage.asset->url,
-      "profileImageUrl": profileImage.asset->url,
       "umkmImageUrl": umkmImage.asset->url,
       "gallery": gallery[] {
         "src": asset->url,
@@ -49,6 +36,7 @@ export default function DusunDetailView({ dusunId, setView }) {
       if (data) {
         const localFallback = DUSUN_DATA[dusunId];
         const mergedData = {
+          ...localFallback,
           name: data.name || localFallback.name,
           lead: data.lead || localFallback.lead,
           subtitle: data.subtitle || localFallback.subtitle,
@@ -56,7 +44,6 @@ export default function DusunDetailView({ dusunId, setView }) {
           profile: data.profile || localFallback.profile,
           whatsappContact: data.whatsappContact || localFallback.whatsappContact,
           coverImageUrl: data.coverImageUrl || null,
-          profileImageUrl: data.profileImageUrl || null,
           umkmImageUrl: data.umkmImageUrl || null,
           batas: data.batas ? {
             utara: data.batas.utara || localFallback.batas?.utara,
@@ -64,13 +51,6 @@ export default function DusunDetailView({ dusunId, setView }) {
             timur: data.batas.timur || localFallback.batas?.timur,
             barat: data.batas.barat || localFallback.batas?.barat,
           } : localFallback.batas,
-          umkm: data.umkm ? {
-            name: data.umkm.name || localFallback.umkm?.name,
-            description: data.umkm.description || localFallback.umkm?.description,
-            steps: (data.umkm.steps && data.umkm.steps.length > 0) ? data.umkm.steps : localFallback.umkm?.steps
-          } : localFallback.umkm,
-          narrative: data.narrative || localFallback.narrative,
-          characteristics: (data.characteristics && data.characteristics.length > 0) ? data.characteristics : localFallback.characteristics,
           gallery: (data.gallery && data.gallery.length > 0) ? data.gallery : localFallback.gallery
         };
         setDusun(mergedData);
@@ -115,13 +95,13 @@ export default function DusunDetailView({ dusunId, setView }) {
     ? dusun.coverImageUrl 
     : (localFallback.gallery && localFallback.gallery[0] ? localFallback.gallery[0].src : null);
 
-  // UMKM image:
-  const section2Image = dusun.umkmImageUrl 
-    ? dusun.umkmImageUrl 
-    : (localFallback.gallery && localFallback.gallery[1] ? localFallback.gallery[1].src : 'https://via.placeholder.com/1200x800');
-
-  // Gallery Photos (Additional photos at the bottom)
+  // Gallery Photos
   const remainingGalleryPhotos = dusun.gallery || [];
+
+  // Stats data
+  const stats = dusun.stats || localFallback.stats;
+  const kampungList = dusun.kampungList || localFallback.kampungList || [];
+  const komoditas = dusun.komoditas || localFallback.komoditas;
 
   return (
     <div className="pb-24 animate-fade-in font-sans text-stone-850 w-full">
@@ -137,7 +117,7 @@ export default function DusunDetailView({ dusunId, setView }) {
           background: 'linear-gradient(135deg, #064e3b, #022c22)'
         }}
       >
-        {/* Floating Back Button overlaid on top-left of the Hero Banner */}
+        {/* Floating Back Button */}
         <div className="absolute top-6 left-6 z-20">
           <button 
             onClick={() => setView('home')}
@@ -152,6 +132,7 @@ export default function DusunDetailView({ dusunId, setView }) {
           <h1 className="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight leading-none uppercase">
             {dusun.name}
           </h1>
+          <p className="text-stone-300 text-sm font-medium">Desa Pasirmunjul</p>
           <div className="w-12 h-0.5 bg-white mx-auto"></div>
           {dusun.subtitle && (
             <p className="text-stone-300 text-xs sm:text-sm uppercase tracking-widest font-semibold max-w-xl mx-auto leading-relaxed">
@@ -164,16 +145,68 @@ export default function DusunDetailView({ dusunId, setView }) {
               onClick={scrollToContent}
               className="inline-flex py-2.5 px-6 border border-white hover:bg-white hover:text-stone-950 font-bold text-[10px] sm:text-xs uppercase tracking-widest transition-all cursor-pointer bg-transparent text-white"
             >
-              LEARN MORE
+              JELAJAHI DUSUN
             </button>
           </div>
         </div>
       </section>
 
-      {/* 2. PROFILE SECTION (Constrained inside margin, starts directly below the full-screen banner) */}
+      {/* 2. STATISTIK MINI DUSUN (4 kartu angka) */}
+      {stats && (
+        <section ref={contentRef} className="bg-white border-b border-stone-200 py-10 px-4 scroll-mt-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center space-y-2 mb-8">
+              <p className="text-[10px] text-emerald-700 font-extrabold uppercase tracking-widest">Ringkasan Data</p>
+              <h2 className="font-display font-black text-stone-900 text-xl sm:text-2xl uppercase tracking-wider">
+                Statistik {dusun.name}
+              </h2>
+              <div className="w-8 h-0.5 bg-emerald-500 mx-auto"></div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {/* Jumlah Kampung */}
+              <div className="bg-emerald-50/80 border border-emerald-200/60 rounded-xl p-5 text-center space-y-2">
+                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
+                  <Home className="h-5 w-5 text-emerald-700" />
+                </div>
+                <p className="font-display font-black text-2xl sm:text-3xl text-stone-900">{stats.kampung}</p>
+                <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">Kampung</p>
+              </div>
+
+              {/* Jumlah RT */}
+              <div className="bg-amber-50/80 border border-amber-200/60 rounded-xl p-5 text-center space-y-2">
+                <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mx-auto">
+                  <Users className="h-5 w-5 text-amber-700" />
+                </div>
+                <p className="font-display font-black text-2xl sm:text-3xl text-stone-900">{stats.rt}</p>
+                <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">RT</p>
+              </div>
+
+              {/* Jumlah RW */}
+              <div className="bg-blue-50/80 border border-blue-200/60 rounded-xl p-5 text-center space-y-2">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+                  <Layers className="h-5 w-5 text-blue-700" />
+                </div>
+                <p className="font-display font-black text-2xl sm:text-3xl text-stone-900">{stats.rw}</p>
+                <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">RW</p>
+              </div>
+
+              {/* Komoditas Utama */}
+              <div className="bg-green-50/80 border border-green-200/60 rounded-xl p-5 text-center space-y-2">
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                  <Leaf className="h-5 w-5 text-green-700" />
+                </div>
+                <p className="font-display font-black text-sm sm:text-base text-stone-900 leading-tight">{stats.komoditas}</p>
+                <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">Komoditas</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 3. PROFIL KEPEMIMPINAN KADUS */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
-        <section ref={contentRef} className="bg-white p-6 sm:p-10 border border-stone-200 scroll-mt-12 shadow-sm rounded-sm">
-          {/* Bio Details & CTA button */}
+        <section className="bg-white p-6 sm:p-10 border border-stone-200 shadow-sm rounded-sm">
           <div className="space-y-6">
             <div className="space-y-2">
               <p className="text-[10px] text-emerald-700 font-extrabold uppercase tracking-widest">Profil Kepemimpinan</p>
@@ -199,9 +232,50 @@ export default function DusunDetailView({ dusunId, setView }) {
         </section>
       </div>
 
-      {/* 3. BOUNDARIES SECTION (Full-width horizontal strip stretching to edges of window) */}
+      {/* 4. WILAYAH KAMPUNG & RT/RW (Tabel) */}
+      {kampungList.length > 0 && (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+          <section className="bg-white border border-stone-200 shadow-sm rounded-sm overflow-hidden">
+            <div className="p-6 sm:p-8 border-b border-stone-100">
+              <div className="space-y-2">
+                <p className="text-[10px] text-emerald-700 font-extrabold uppercase tracking-widest">Pembagian Wilayah</p>
+                <h3 className="font-display font-black text-stone-900 text-xl uppercase tracking-wider">
+                  Kampung & RT/RW {dusun.name}
+                </h3>
+                <div className="w-8 h-0.5 bg-emerald-500"></div>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-stone-50 border-b border-stone-200">
+                    <th className="text-left py-3 px-6 font-extrabold text-[10px] uppercase tracking-widest text-stone-500">No</th>
+                    <th className="text-left py-3 px-6 font-extrabold text-[10px] uppercase tracking-widest text-stone-500">Nama Kampung</th>
+                    <th className="text-left py-3 px-6 font-extrabold text-[10px] uppercase tracking-widest text-stone-500">RT</th>
+                    <th className="text-left py-3 px-6 font-extrabold text-[10px] uppercase tracking-widest text-stone-500">RW</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {kampungList.map((kp, idx) => (
+                    <tr key={idx} className={`border-b border-stone-100 ${idx % 2 === 0 ? 'bg-white' : 'bg-stone-50/50'} hover:bg-emerald-50/50 transition-colors`}>
+                      <td className="py-3 px-6 text-stone-400 font-bold text-xs">{String(idx + 1).padStart(2, '0')}</td>
+                      <td className="py-3 px-6 font-bold text-stone-800">{kp.nama}</td>
+                      <td className="py-3 px-6 text-stone-600">{kp.rt}</td>
+                      <td className="py-3 px-6 text-stone-600">{kp.rw}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* 5. BATAS WILAYAH GEOGRAFIS */}
       {dusun.batas && (
-        <section className="bg-stone-50 py-12 px-6 border-y border-stone-200 space-y-8 w-full mt-16">
+        <section className="bg-stone-50 py-12 px-6 border-y border-stone-200 space-y-8 w-full mt-12">
           <div className="text-center space-y-2">
             <h3 className="text-stone-900 font-black uppercase text-xs sm:text-sm tracking-widest">
               BATAS WILAYAH GEOGRAFIS
@@ -235,65 +309,27 @@ export default function DusunDetailView({ dusunId, setView }) {
 
       {/* Remaining content blocks (Constrained inside margin) */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 mt-16">
-        
-        {/* 4. POTENTIAL / UMKM SECTION (Weebly Alternate Layout Block) */}
-        {dusun.umkm && (
-          <section className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-12 items-center bg-white p-6 sm:p-10 border border-stone-200">
-            {/* Left: Info */}
-            <div className="md:col-span-7 space-y-6">
+
+        {/* 6. KOMODITAS UNGGULAN */}
+        {komoditas && (
+          <section className="bg-white p-6 sm:p-10 border border-stone-200 shadow-sm rounded-sm">
+            <div className="space-y-6">
               <div className="space-y-2">
                 <p className="text-[10px] text-emerald-700 font-extrabold uppercase tracking-widest">Potensi Unggulan</p>
                 <h3 className="font-display font-black text-stone-900 text-2xl uppercase tracking-wider">
-                  {dusun.umkm.name}
+                  {komoditas.name}
                 </h3>
                 <div className="w-8 h-0.5 bg-emerald-500"></div>
               </div>
 
               <p className="text-stone-600 text-sm sm:text-base leading-relaxed text-justify">
-                {dusun.umkm.description}
+                {komoditas.description}
               </p>
-
-              {/* List of steps under description */}
-              {dusun.umkm.steps && dusun.umkm.steps.length > 0 && (
-                <div className="space-y-4 pt-4 border-t border-stone-100">
-                  <p className="text-xs uppercase tracking-wider font-extrabold text-stone-900">Alur & Proses Pembuatan:</p>
-                  <div className="space-y-3">
-                    {dusun.umkm.steps.map((step, idx) => (
-                      <div key={idx} className="flex items-start space-x-3 text-xs sm:text-sm text-stone-600">
-                        <span className="flex items-center justify-center w-5 h-5 bg-stone-900 text-white font-black text-[9px] shrink-0 mt-0.5">
-                          {step.no || `0${idx+1}`}
-                        </span>
-                        <span><strong>{step.title}:</strong> {step.desc}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Right: Product Image */}
-            <div className="md:col-span-5 aspect-[4/3] bg-stone-50 border border-stone-200 overflow-hidden self-start md:self-center">
-              <img 
-                src={section2Image} 
-                alt={dusun.umkm.name} 
-                className="w-full h-full object-cover"
-              />
             </div>
           </section>
         )}
 
-        {/* 5. TIMELINE KKN / NARRATIVE */}
-        {dusun.narrative && (
-          <section className="bg-stone-50 p-6 sm:p-10 border border-stone-200 space-y-4">
-            <h3 className="font-display font-black text-stone-900 text-lg uppercase tracking-wider">Catatan Pengabdian KKN</h3>
-            <div className="w-8 h-0.5 bg-emerald-500"></div>
-            <p className="text-stone-600 text-sm sm:text-base leading-relaxed text-justify whitespace-pre-line">
-              {dusun.narrative}
-            </p>
-          </section>
-        )}
-
-        {/* 6. DUSUN GALLERY (Photos at the bottom) */}
+        {/* 7. DUSUN GALLERY (Photos at the bottom) */}
         {remainingGalleryPhotos.length > 0 && (
           <section className="bg-white p-6 sm:p-10 border border-stone-200 space-y-6">
             <div className="border-b border-stone-150 pb-4">

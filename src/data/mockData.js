@@ -17,7 +17,7 @@ export const VILLAGE_INFO = {
   tagline: "Pasirmunjul Ngahiji",
   about: "Desa Pasirmunjul terletak di Kecamatan Sukatani, Kabupaten Purwakarta, Jawa Barat. Dikelilingi oleh perbukitan yang hijau dan pemandangan alam yang asri, desa ini resmi mekar dari Desa Cianting pada tahun 1985. Nama Pasirmunjul sendiri diambil oleh masyarakat setempat dari gabungan kata Sunda 'Pasir' yang berarti perbukitan pasir dan 'Munjul' yang berarti menonjol di dataran tinggi, mencerminkan topografi wilayahnya yang subur di pegunungan.",
   address: "Kantor Desa Pasirmunjul, Jl. Desa Pasirmunjul RT 1/1, Kecamatan Sukatani, Kabupaten Purwakarta, Jawa Barat 41167",
-  phone: "083100607316", // Pelayanan
+  phone: "083100607316",
   stats: [
     { label: "Luas Wilayah", value: "585,858 Ha", icon: "Map" },
     { label: "Jumlah Penduduk", value: "3.660 Jiwa", icon: "Users" },
@@ -93,36 +93,32 @@ export const PROFILE_DESA_SUB = {
 export const DUSUN_DATA = {
   "dusun-1": {
     id: "dusun-1",
-    name: "Dusun 1 (Kp. Cigintung)",
-    lead: "Kepala Dusun 1 - Bpk. Dede Hamid Sutisna",
-    profile: "Dusun 1 dipimpin oleh Bapak Dede Hamid Sutisna (Bpk. Misna). Meliputi wilayah administratif RT 01 hingga RT 06 yang terbagi ke dalam RW 01 dan RW 02. Berada di sisi barat desa, dusun ini berbatasan langsung dengan Desa Cianting. Sebagian besar warga aktif mengembangkan pertanian hortikultura dan komoditas pendukung pangan desa.",
+    name: "Dusun 1",
+    lead: "Dede Hamid Sutisna",
+    profile: "Dusun 1 dipimpin oleh Bapak Dede Hamid Sutisna, membawahi wilayah administratif yang terdiri dari 5 kampung, 6 RT, dan 2 RW. Wilayah ini merupakan pusat pemerintahan desa dengan lokasi Kantor Desa Pasirmunjul berada di Kampung Pasirmunjul. Sebagian besar warga menggantungkan hidup dari sektor pertanian, perkebunan singkong, dan pengolahan gaplek tradisional.",
     whatsappContact: "6283876776079",
+    stats: {
+      kampung: 5,
+      rt: 6,
+      rw: 2,
+      komoditas: "Gaplek & Singkong"
+    },
+    kampungList: [
+      { nama: "Kp. Pasirmunjul", rt: "RT 01", rw: "RW 01" },
+      { nama: "Kp. Baru", rt: "RT 02", rw: "RW 01" },
+      { nama: "Kp. Margasari", rt: "RT 03", rw: "RW 01" },
+      { nama: "Kp. Sukamulya", rt: "RT 04", rw: "RW 01" },
+      { nama: "Kp. Hegarmanah", rt: "RT 05 & 06", rw: "RW 02" }
+    ],
     batas: {
       utara: "Desa Sukatani",
       selatan: "Gunung Hejo",
-      timur: "Kp. Cigintung, Pasirmunjul",
+      timur: "Dusun 2 (Kp. Cigintung)",
       barat: "Desa Cianting, Sukatani"
     },
-    umkm: {
-      name: "Produksi Pengolahan Gaplek",
-      description: "Gaplek diproduksi secara tradisional oleh warga Dusun 1 dari bahan singkong pilihan sebagai makanan cadangan karbohidrat lokal yang tahan lama dan bernilai ekonomi.",
-      steps: [
-        {
-          no: "01",
-          title: "Pengupasan & Pencucian",
-          desc: "Singkong hasil panen kebun dikupas bersih dan dicuci menggunakan air mengalir."
-        },
-        {
-          no: "02",
-          title: "Pemotongan & Penjemuran",
-          desc: "Singkong dipotong sesuai ukuran kemudian dijemur di bawah terik matahari hingga kadar air menyusut habis."
-        },
-        {
-          no: "03",
-          title: "Penyimpanan Lumbung",
-          desc: "Gaplek kering disimpan di dalam lumbung kayu yang kering dan sejuk agar tahan hingga berbulan-bulan."
-        }
-      ]
+    komoditas: {
+      name: "Pengolahan Gaplek Tradisional",
+      description: "Gaplek diproduksi secara turun-temurun oleh warga Dusun 1 dari bahan singkong pilihan. Produk ini menjadi cadangan karbohidrat lokal yang tahan lama dan bernilai ekonomi tinggi sebagai bahan dasar makanan tradisional."
     },
     gallery: [
       {
@@ -135,78 +131,68 @@ export const DUSUN_DATA = {
   },
   "dusun-2": {
     id: "dusun-2",
-    name: "Dusun 2 (Kp. Telaga)",
-    lead: "Kepala Dusun 2 - Bpk. Hendi",
-    profile: "Dusun 2 berpusat di Kampung Telaga dengan kepemimpinan Bapak Hendi. Mengelola wilayah administrasi RT 07 hingga RT 10 yang terbagi ke dalam RW 03 dan RW 06. Dusun 2 terkenal dengan kekayaan alamnya yang melimpah, khususnya komoditas pertanian padi sawah, lahang segar, dan industri gula aren tradisional.",
+    name: "Dusun 2",
+    lead: "Hendi",
+    profile: "Dusun 2 dipimpin oleh Bapak Hendi, membawahi 4 kampung yang tersebar di wilayah RT 07 hingga RT 10 (RW 03). Dusun ini terkenal dengan kekayaan alam pohon aren yang melimpah, menjadikannya sebagai sentra produksi gula aren cetak dan lahang segar terbesar di Desa Pasirmunjul. Selain itu, pertanian padi sawah juga menjadi penopang utama ekonomi warga.",
     whatsappContact: "6285956320480",
+    stats: {
+      kampung: 4,
+      rt: 4,
+      rw: 1,
+      komoditas: "Gula Aren & Lahang"
+    },
+    kampungList: [
+      { nama: "Kp. Cihampelas", rt: "RT 07", rw: "RW 03" },
+      { nama: "Kp. Cigintung", rt: "RT 08", rw: "RW 03" },
+      { nama: "Kp. Talaga", rt: "RT 09", rw: "RW 03" },
+      { nama: "Kp. Talaga", rt: "RT 10", rw: "RW 03" }
+    ],
     batas: {
       utara: "Desa Sukatani, Kec. Sukatani",
       selatan: "Desa Gunung Hejo, Darangdan",
-      timur: "Kp. Randiah, Kec. Sukatani",
-      barat: "Kp. Sukamulya, Kec. Sukatani"
+      timur: "Dusun 3 (Kp. Randiah)",
+      barat: "Dusun 1 (Kp. Sukamulya)"
     },
-    umkm: {
+    komoditas: {
       name: "Sentra Gula Aren & Lahang Segar",
-      description: "Penyadapan lahang segar dari nira pohon aren alami yang kemudian diolah menggunakan tungku kayu bakar menjadi gula aren cetak khas berkualitas premium.",
-      steps: [
-        {
-          no: "01",
-          title: "Penyadapan Air Lahang",
-          desc: "Nira aren segar (lahang) diambil setiap pagi dari tangkai bunga aren menggunakan wadah bambu."
-        },
-        {
-          no: "02",
-          title: "Perebusan Kental",
-          desc: "Lahang disaring bersih lalu direbus di atas tungku kayu bakar selama berjam-jam hingga berubah mengental pekat."
-        },
-        {
-          no: "03",
-          title: "Pencetakan Tradisional",
-          desc: "Adonan panas dituangkan ke cetakan tempurung kelapa atau bambu alami dan dibiarkan mendingin hingga mengeras sempurna."
-        }
-      ]
+      description: "Nira aren segar (lahang) disadap langsung dari pohon aren pilihan oleh warga setiap pagi, lalu diolah menggunakan tungku kayu bakar tradisional menjadi gula aren cetak khas berkualitas premium. Produk ini menjadi komoditas andalan dusun yang dipasarkan hingga ke luar wilayah Purwakarta."
     },
     gallery: [
       {
         id: "d2-img1",
         src: "/images/dusun_2_village.jpg",
-        title: "Pemukiman Kampung Telaga",
-        description: "Suasana pemukiman warga yang bersih, tertata rapi, dan asri di Dusun 2."
+        title: "Pemukiman Dusun 2",
+        description: "Suasana pemukiman warga yang bersih dan asri di Dusun 2."
       }
     ]
   },
   "dusun-3": {
     id: "dusun-3",
-    name: "Dusun 3 (Kp. Randiah)",
-    lead: "Kepala Dusun 3 - Bpk. Mulyadin",
-    profile: "Dusun 3 dipimpin oleh Bapak Mulyadin, menaungi wilayah Kampung Randiah yang mencakup RT 11 hingga RT 14 (RW 04 & RW 05). Dusun ini dianugerahi aliran air jernih dari Sungai Cibingbin serta perkebunan pisang uli dan pisang tanduk yang subur. Sebagian besar hasil kebun dijual segar, dan sebagian diolah menjadi selai pisang.",
+    name: "Dusun 3",
+    lead: "Mulyadin",
+    profile: "Dusun 3 dipimpin oleh Bapak Mulyadin, menaungi wilayah Kampung Randiah yang mencakup RT 11 hingga RT 14 (RW 04 & RW 05). Dusun ini dianugerahi tanah yang sangat subur, aliran air jernih dari Sungai Cibingbin, serta perkebunan pisang uli dan pisang tanduk yang melimpah. Sebagian besar hasil kebun dijual segar ke pasar, dan sebagian diolah menjadi selai pisang khas dusun.",
     whatsappContact: "6283863546513",
+    stats: {
+      kampung: 1,
+      rt: 4,
+      rw: 2,
+      komoditas: "Pisang & Selai"
+    },
+    kampungList: [
+      { nama: "Kp. Randiah", rt: "RT 11", rw: "RW 04" },
+      { nama: "Kp. Randiah", rt: "RT 12", rw: "RW 04" },
+      { nama: "Kp. Randiah", rt: "RT 13", rw: "RW 05" },
+      { nama: "Kp. Randiah", rt: "RT 14", rw: "RW 05" }
+    ],
     batas: {
       utara: "Desa Sukatani, Kec. Sukatani",
       selatan: "Desa Gununghejo, Kec. Darangdan",
       timur: "Desa Sukajadi, Kec. Pondok Salam",
-      barat: "Kp. Telaga, Kec. Sukatani"
+      barat: "Dusun 2 (Kp. Talaga)"
     },
-    umkm: {
-      name: "Produksi Selai Pisang & Komoditas Segar",
-      description: "Hasil perkebunan pisang yang melimpah sebagian dipasarkan segar dan sebagian lagi diproduksi menjadi olahan selai pisang yang manis alami.",
-      steps: [
-        {
-          no: "01",
-          title: "Sortasi Hasil Panen",
-          desc: "Pisang dan padi dipanen dari perkebunan warga, disortir berdasarkan tingkat kematangan."
-        },
-        {
-          no: "02",
-          title: "Pengolahan Selai",
-          desc: "Pisang yang matang diolah secara bersih dan higienis menjadi produk olahan selai pisang manis."
-        },
-        {
-          no: "03",
-          title: "Pengepakan & Distribusi",
-          desc: "Selai pisang dikemas menarik, sementara pisang mentah dan padi langsung dijual ke pasar."
-        }
-      ]
+    komoditas: {
+      name: "Perkebunan Pisang & Selai Pisang",
+      description: "Hasil perkebunan pisang uli dan pisang tanduk yang melimpah sebagian dipasarkan dalam bentuk buah segar, dan sebagian lagi diproduksi secara kreatif menjadi olahan selai pisang manis khas Dusun 3 yang menjadi oleh-oleh favorit pengunjung."
     },
     gallery: [
       {
@@ -224,46 +210,46 @@ export const DUSUN_ACCORDION = [
   {
     id: "dusun-1",
     num: 1,
-    title: "Dusun 1 (Kp. Cigintung)",
-    subtitle: "Sentra Olahan Gaplek Pangan",
+    title: "Dusun 1",
+    subtitle: "Pusat Pemerintahan & Sentra Gaplek",
     icon: "🌾",
-    lead: "Bpk. Dede Hamid Sutisna (Misna)",
-    profile: "Dusun 1 mencakup RT 01 hingga RT 06 (RW 01 & RW 02) dengan komoditas unggulan gaplek singkong tradisional.",
+    lead: "Bpk. Dede Hamid Sutisna",
+    profile: "Terdiri dari 5 kampung (Kp. Pasirmunjul, Baru, Margasari, Sukamulya, Hegarmanah), 6 RT, dan 2 RW. Komoditas unggulan: gaplek singkong.",
     batas: {
       utara: "Desa Sukatani",
       selatan: "Gunung Hejo",
-      timur: "Kp. Cigintung",
+      timur: "Dusun 2 (Kp. Cigintung)",
       barat: "Desa Cianting"
     }
   },
   {
     id: "dusun-2",
     num: 2,
-    title: "Dusun 2 (Kp. Telaga)",
+    title: "Dusun 2",
     subtitle: "Sentra Gula Aren & Sawah Padi",
-    icon: "🌲",
-    lead: "Bpk. Hendi (Kadus)",
-    profile: "Dusun 2 mencakup RT 07 hingga RT 10 (RW 03 & RW 06) dengan produk unggulan gula aren cetak dan lahang segar.",
+    icon: "🌴",
+    lead: "Bpk. Hendi",
+    profile: "Terdiri dari 4 kampung (Kp. Cihampelas, Cigintung, Talaga), 4 RT, dan 1 RW. Komoditas unggulan: gula aren cetak & lahang segar.",
     batas: {
       utara: "Desa Sukatani",
       selatan: "Desa Gunung Hejo",
-      timur: "Kp. Randiah",
-      barat: "Kp. Sukamulya"
+      timur: "Dusun 3 (Kp. Randiah)",
+      barat: "Dusun 1 (Kp. Sukamulya)"
     }
   },
   {
     id: "dusun-3",
     num: 3,
-    title: "Dusun 3 (Kp. Randiah)",
+    title: "Dusun 3",
     subtitle: "Pariwisata Sungai & Perkebunan Pisang",
-    icon: "🐂",
-    lead: "Bpk. Mulyadin (Kadus)",
-    profile: "Dusun 3 mencakup RT 11 hingga RT 14 (RW 04 & RW 05) dengan pariwisata Sungai Cibingbin dan kebun pisang subur.",
+    icon: "🍌",
+    lead: "Bpk. Mulyadin",
+    profile: "Meliputi Kp. Randiah dengan 4 RT dan 2 RW. Komoditas unggulan: pisang uli, pisang tanduk, dan selai pisang khas.",
     batas: {
       utara: "Desa Sukatani",
       selatan: "Desa Gununghejo",
       timur: "Desa Sukajadi",
-      barat: "Kp. Telaga"
+      barat: "Dusun 2 (Kp. Talaga)"
     }
   }
 ];
