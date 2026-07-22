@@ -10,15 +10,6 @@ export default function BlogListView({ posts, setView, setSelectedPostId }) {
   const categories = ['Semua', 'KKN Update', 'UMKM', 'Agrowisata'];
   const itemsPerPage = 12;
 
-  // Popular tags for Pasirmunjul
-  const popularTags = [
-    '# DESA PASIRMUNJUL',
-    '# KKN SUKATANI 2026',
-    '# UMKM GULA AREN',
-    '# AGROWISATA CITARUM',
-    '# PERTANIAN PISANG'
-  ];
-
   const handleReadMore = (postId) => {
     setSelectedPostId(postId);
     setView('blog-detail');
@@ -56,30 +47,6 @@ export default function BlogListView({ posts, setView, setSelectedPostId }) {
   return (
     <div className="space-y-8 pb-16 animate-fade-in">
       
-      {/* 1. TOP BAR: Popular Tags */}
-      <div className="bg-white border-y border-stone-200 flex items-stretch h-10 overflow-hidden shadow-xs">
-        <div 
-          className="bg-emerald-700 text-white font-display font-extrabold text-[11px] uppercase tracking-wider px-5 flex items-center shrink-0 relative select-none pr-8 pr-7"
-          style={{ clipPath: 'polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)' }}
-        >
-          <span>Popular Tags</span>
-        </div>
-        <div className="flex items-center space-x-6 px-4 overflow-x-auto scrollbar-none py-1 select-none">
-          {popularTags.map((tag, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                const keyword = tag.replace('# ', '');
-                setSearchTerm(keyword);
-                setCurrentPage(1); // Reset page on filter
-              }}
-              className="text-[11px] font-extrabold text-stone-850 hover:text-emerald-700 transition-colors whitespace-nowrap cursor-pointer"
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {/* 2. SECOND BAR: Breaking News */}
       <div className="bg-white border border-stone-200 rounded-lg overflow-hidden flex items-center shadow-xs">

@@ -47,7 +47,7 @@ export default function Footer({ villageInfo, setView }) {
               </li>
               <li>
                 <button onClick={() => handleNavClick('dusun-1')} className="hover:text-emerald-400 transition-colors cursor-pointer">
-                  Dusun 1 (Sentra UMKM)
+                  Dusun 1
                 </button>
               </li>
               <li>
@@ -57,7 +57,7 @@ export default function Footer({ villageInfo, setView }) {
               </li>
               <li>
                 <button onClick={() => handleNavClick('dusun-3')} className="hover:text-emerald-400 transition-colors cursor-pointer">
-                  Dusun 3 (Tani & Alam)
+                  Dusun 3
                 </button>
               </li>
               <li>
