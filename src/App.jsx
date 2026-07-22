@@ -61,7 +61,11 @@ export default function App() {
       author,
       readTime,
       "image": image.asset->url,
-      category
+      category,
+      "gallery": gallery[] {
+        "src": asset->url,
+        title
+      }
     }`)
     .then((sanityPosts) => {
       if (sanityPosts && sanityPosts.length > 0) {

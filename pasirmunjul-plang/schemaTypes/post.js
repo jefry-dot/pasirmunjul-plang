@@ -75,6 +75,21 @@ export default {
         ]
       },
       validation: Rule => Rule.required()
+    },
+    {
+      name: 'gallery',
+      title: 'Galeri Foto Dokumentasi Tambahan (Opsional)',
+      type: 'array',
+      description: 'Upload foto-foto kegiatan lainnya terkait artikel berita ini. Tampil di bagian bawah artikel.',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            { name: 'title', title: 'Judul / Keterangan Foto', type: 'string', isHighlighted: true }
+          ]
+        }
+      ]
     }
   ]
 }
