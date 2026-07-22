@@ -127,9 +127,9 @@ export default {
     },
     {
       name: 'gallery',
-      title: 'Galeri Foto Potensi / Produk Dusun',
+      title: '📦 Galeri Foto Produk / Komoditas',
       type: 'array',
-      description: 'Upload foto-foto produk/potensi dusun. Foto pertama akan tampil besar di website, sisanya muncul saat diklik.',
+      description: 'Foto-foto PRODUK unggulan dusun (gula aren, gaplek, selai pisang, dll). Foto pertama tampil besar, sisanya muncul saat diklik.',
       of: [
         {
           type: 'image',
@@ -159,6 +159,22 @@ export default {
       title: 'Link Google Maps (Buka di Maps)',
       type: 'url',
       description: 'Link langsung ke Google Maps. Cara: Buka Google Maps → klik Share → Copy link.'
+    },
+    {
+      name: 'dokumentasiGallery',
+      title: '📸 Galeri Dokumentasi & Kegiatan Dusun',
+      type: 'array',
+      description: 'Foto-foto KEGIATAN dusun, suasana kampung, gotong royong, sosialisasi KKN, pemandangan alam, dll. Tampil di section terpisah di bawah.',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            { name: 'title', title: 'Judul Foto', type: 'string', isHighlighted: true },
+            { name: 'description', title: 'Deskripsi Foto', type: 'string', isHighlighted: true }
+          ]
+        }
+      ]
     }
   ]
 }

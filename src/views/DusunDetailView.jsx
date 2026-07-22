@@ -114,6 +114,8 @@ export default function DusunDetailView({ dusunId, setView }) {
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [dokLightboxOpen, setDokLightboxOpen] = useState(false);
+  const [dokLightboxIndex, setDokLightboxIndex] = useState(0);
   
   const contentRef = useRef(null);
 
@@ -135,6 +137,11 @@ export default function DusunDetailView({ dusunId, setView }) {
       mapsEmbedUrl,
       mapsLinkUrl,
       "gallery": gallery[] {
+        "src": asset->url,
+        "title": title,
+        "description": description
+      },
+      "dokumentasiGallery": dokumentasiGallery[] {
         "src": asset->url,
         "title": title,
         "description": description
@@ -162,7 +169,8 @@ export default function DusunDetailView({ dusunId, setView }) {
             timur: data.batas.timur || localFallback.batas?.timur,
             barat: data.batas.barat || localFallback.batas?.barat,
           } : localFallback.batas,
-          gallery: (data.gallery && data.gallery.length > 0) ? data.gallery : localFallback.gallery
+          gallery: (data.gallery && data.gallery.length > 0) ? data.gallery : localFallback.gallery,
+          dokumentasiGallery: (data.dokumentasiGallery && data.dokumentasiGallery.length > 0) ? data.dokumentasiGallery : []
         };
         setDusun(mergedData);
       } else {
@@ -218,13 +226,23 @@ export default function DusunDetailView({ dusunId, setView }) {
   return (
     <div className="pb-24 animate-fade-in font-sans text-stone-850 w-full">
 
-      {/* LIGHTBOX POPUP */}
+      {/* LIGHTBOX POPUP - Galeri Produk */}
       <LightboxGallery 
         photos={galleryPhotos}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
         initialIndex={lightboxIndex}
       />
+
+      {/* LIGHTBOX POPUP - Galeri Dokumentasi */}
+      {dusun.dokumentasiGallery && dusun.dokumentasiGallery.length > 0 && (
+        <LightboxGallery 
+          photos={dusun.dokumentasiGallery}
+          isOpen={dokLightboxOpen}
+          onClose={() => setDokLightboxOpen(false)}
+          initialIndex={dokLightboxIndex}
+        />
+      )}
       
       {/* 1. HERO HEADER BANNER */}
       <section 
@@ -318,7 +336,53 @@ export default function DusunDetailView({ dusunId, setView }) {
         </section>
       )}
 
-      {/* 3. PROFIL KEPEMIMPINAN KADUS */}
+      {/* 3. GALERI DOKUMENTASI & KEGIATAN DUSUN */}
+      {dusun.dokumentasiGallery && dusun.dokumentasiGallery.length > 0 && (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
+          <section className="bg-white border border-stone-200 shadow-sm rounded-sm overflow-hidden">
+            <div className="p-6 sm:p-8 border-b border-stone-100">
+              <div className="space-y-2">
+                <p className="text-[10px] text-emerald-700 font-extrabold uppercase tracking-widest">Dokumentasi Visual</p>
+                <h3 className="font-display font-black text-stone-900 text-xl uppercase tracking-wider">
+                  Galeri Kegiatan & Suasana {dusun.name}
+                </h3>
+                <div className="w-8 h-0.5 bg-emerald-500"></div>
+                <p className="text-stone-500 text-xs sm:text-sm">Kumpulan foto kegiatan dusun, suasana kampung, dan dokumentasi KKN</p>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {dusun.dokumentasiGallery.map((photo, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setDokLightboxIndex(idx);
+                      setDokLightboxOpen(true);
+                    }}
+                    className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-stone-200 cursor-pointer"
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.title || `Foto dokumentasi ${idx + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-end">
+                      {photo.title && (
+                        <p className="text-white text-[10px] font-bold p-2 opacity-0 group-hover:opacity-100 transition-opacity truncate w-full">
+                          {photo.title}
+                        </p>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* 4. PROFIL KEPEMIMPINAN KADUS */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
         <section className="bg-white p-6 sm:p-10 border border-stone-200 shadow-sm rounded-sm">
           <div className="space-y-6">
